@@ -13,8 +13,7 @@ quarto publish
 
 -----------------------------------------------
 
-This is the blog of an interdisciplinary PhD consultant with a passion for data visualization/analysis, pragmatic software engineering, FOSS, and science! 
-On it I document software and hardware innovations alongside philosophical musings and information theory rants. 
+I blog things here.
 
 ------------------------------------------------
 
