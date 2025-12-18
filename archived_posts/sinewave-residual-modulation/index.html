@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tylar">
-<meta name="dcterms.date" content="2024-01-25">
+<meta name="dcterms.date" content="2024-02-27">
 
-<title>Choosing Images for Rookery Bay NERR in GEE – tylar.info</title>
+<title>SineWave Residual Modulation – tylar.info</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -110,7 +76,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -145,89 +111,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Choosing Images for Rookery Bay NERR in GEE</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Tylar </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">January 25, 2024</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">SineWave Residual Modulation</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tylar </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 27, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
 
 
-<p>Today I am working to select the “best” satellite images for input into a machine learning model. We want full coverage of the RBNERR area but we are also looking for consistency between images.</p>
-<p>A display of how evenly the area is covered is shown below:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>exports<span class="op">.</span><span class="at">displayIC</span> <span class="op">=</span> <span class="kw">function</span>(d){</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> imageCollection <span class="op">=</span> d<span class="op">.</span><span class="at">imageCollection</span><span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> sumImg <span class="op">=</span> imageCollection<span class="op">.</span><span class="fu">count</span>()<span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    sumImg</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">min</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">max</span><span class="op">:</span> <span class="dv">51</span>}<span class="op">,</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Map</span><span class="op">.</span><span class="fu">centerObject</span>(sumImg)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rookery <span class="op">=</span> <span class="pp">require</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"users/tylarmurray/rois:RBNERR"</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>exports<span class="op">.</span><span class="fu">displayIC</span>({</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">imageCollection</span><span class="op">:</span> rookery<span class="op">.</span><span class="at">wv_image_collection</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>centerObject</code> call left things very zoomed out but this works well otherwise. I have reduced the opacity a bit in the following screenshot so the basemap can show through slightly.</p>
+</header>
+
+
+<p>I had the “opportunity” to spend many hours alone with my own thoughts over the last month. I spent much of the time imagining how I would transmit a signal if I were wanting to contact aliens. What I came up with may not be particularly novel since I am not a signal processing expert but hopefully this writing won’t upset my grad school professors on the subject too much.</p>
+<p>We start with a repeating signal to give us a method of synchronizing clocks between locations. A more capable civilization might modulate the wavelet of a pulsar but my soft human meat brain likes to imagine a sine wave to serve as this timing wave. From this wave we can easily detect a frequency (f) and express it as a period (T).</p>
+<p>My idea from there is to capture the residual fluctuations over the wave and average them. For symmetrical waves like sinusoidal waves the first half of the wave can be added to the second half (half-period residual modulation detection). But in general any given wavelet would be differenced from the next to produce a set of residuals (full period residual modulation detection).</p>
+<p>As far as I know this is not something that can be accomplished with analog signal processing. The signal must be stored for at least the full period T and then combined with the next wavelet instance. The collection and storage of the signal will have a certain bitrate, which must be higher than the timing wave. It is not clear to me what bitrate would be the ideal choice for a given timing frequency. Bigger always seems better but I remain uncertain how to encode universally interpretable information in a time series, regardless of the bitrate. One ideal would be to transmit a signal with similar meaning at multiple bitrates - a lower resolution vs a higher resolution of the same meaning. Could the antenna bandwidth characteristics somehow imply an ideal bitrate? Maybe there is something to be figured related to the <a href="https://en.wikipedia.org/wiki/Network_throughput#Maximum_throughput">maximum throughput</a> or <a href="https://en.wikipedia.org/wiki/Channel_capacity">channel capacity</a> of the proposed signal processing paradigm. Or perhaps using a known distance to the transmitter could give you a sense of what sampling frequency would be reasonable to expect.</p>
+<p>Anyway, this is how I would get started if I was leading a new SETI project. Aim something at a pulsar and start crunching on this.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./coverMap.png" class="img-fluid figure-img"></p>
-<figcaption>covermap</figcaption>
+<p><img src="./wavelet_residual_am_recieving.svg" class="img-fluid figure-img"></p>
+<figcaption>wavelet_residual_am_image</figcaption>
 </figure>
 </div>
-<p>I am struggling to choose a method for identifying the best subset of images. It was suggested to limit by season but it is unclear to me how to choose which season is best.</p>
-<p>I ran the code again but on an image collection that has been cloudmasked. I added this little function to the <code>users/tylarmurray/rois/RBNERR</code> namespace:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// return a clean &amp; normalized WV imageCollection.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>exports<span class="op">.</span><span class="at">getCleanWVImageCollection</span> <span class="op">=</span> <span class="kw">function</span>(){</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> wv_fns <span class="op">=</span> <span class="pp">require</span>(<span class="st">'users/tylarmurray/sat_fns:wv_fns'</span>)<span class="op">;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> exports<span class="op">.</span><span class="at">wv_image_collection</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>(wv_fns<span class="op">.</span><span class="at">convertToRatios</span>)  <span class="co">// normalization</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>(wv_fns<span class="op">.</span><span class="at">cloudMaskImage</span>)  <span class="co">// cloudmask</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The new image shows much more detail than it should:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./covermap_cloudmasked.png" class="img-fluid figure-img"></p>
-<figcaption>covermap w/ cloudmask</figcaption>
-</figure>
-</div>
-<p>This means that the cloudmask function is false-positive masking non-clouds often enough for the details to show up here. The amount of detail leaking through is concerning.</p>
 
 
 

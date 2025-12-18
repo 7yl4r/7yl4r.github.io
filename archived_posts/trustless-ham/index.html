@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tylar">
-<meta name="dcterms.date" content="2024-02-27">
+<meta name="dcterms.date" content="2024-02-29">
 
-<title>SineWave Residual Modulation – tylar.info</title>
+<title>Trustless Radio Broadcasting – tylar.info</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -76,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -90,10 +90,6 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Blog</span></a>
-  </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../index/index.html"> 
 <span class="menu-text">About the Author</span></a>
@@ -115,59 +111,59 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">SineWave Residual Modulation</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">SETI</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Tylar </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">February 27, 2024</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Trustless Radio Broadcasting</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tylar </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 29, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
 
 
-<p>I had the “opportunity” to spend many hours alone with my own thoughts over the last month. I spent much of the time imagining how I would transmit a signal if I were wanting to contact aliens. What I came up with may not be particularly novel since I am not a signal processing expert but hopefully this writing won’t upset my grad school professors on the subject too much.</p>
-<p>We start with a repeating signal to give us a method of synchronizing clocks between locations. A more capable civilization might modulate the wavelet of a pulsar but my soft human meat brain likes to imagine a sine wave to serve as this timing wave. From this wave we can easily detect a frequency (f) and express it as a period (T).</p>
-<p>My idea from there is to capture the residual fluctuations over the wave and average them. For symmetrical waves like sinusoidal waves the first half of the wave can be added to the second half (half-period residual modulation detection). But in general any given wavelet would be differenced from the next to produce a set of residuals (full period residual modulation detection).</p>
-<p>As far as I know this is not something that can be accomplished with analog signal processing. The signal must be stored for at least the full period T and then combined with the next wavelet instance. The collection and storage of the signal will have a certain bitrate, which must be higher than the timing wave. It is not clear to me what bitrate would be the ideal choice for a given timing frequency. Bigger always seems better but I remain uncertain how to encode universally interpretable information in a time series, regardless of the bitrate. One ideal would be to transmit a signal with similar meaning at multiple bitrates - a lower resolution vs a higher resolution of the same meaning. Could the antenna bandwidth characteristics somehow imply an ideal bitrate? Maybe there is something to be figured related to the <a href="https://en.wikipedia.org/wiki/Network_throughput#Maximum_throughput">maximum throughput</a> or <a href="https://en.wikipedia.org/wiki/Channel_capacity">channel capacity</a> of the proposed signal processing paradigm. Or perhaps using a known distance to the transmitter could give you a sense of what sampling frequency would be reasonable to expect.</p>
-<p>Anyway, this is how I would get started if I was leading a new SETI project. Aim something at a pulsar and start crunching on this.</p>
+</header>
+
+
+<p>Tonight I am wondering on why my recent “SineWave Residual Modulation” might be useful and I think it has something to do with “trust” or… more enigmatically stated: “shared language”. Supersampling a sinusoidal signal and finding a steady signal in the residuals could be a way to encrypt information. Any swath of spacetime where the lower-frequency timing signal would be detectable would have access to the key, and messages on higher-frequencies could be decrypted using that key. The supersampling frequency would be the same as the new recieving frequency.</p>
+<p>But also maybe I am having some confusion about how the antenna systems work. I am trying to read about <a href="https://en.wikipedia.org/wiki/Software-defined_radio">“Software Defined Radio”</a> but still struggling with some concepts.</p>
+<p>An antenna (or perhaps more accurately, an RF Frontend) is designed to pick up ((and/or?) transmit) a specific frequency. At this selected frequency a signal is detected and can be captured as a time-series. The processing I am referring to takes place within a detected periodic signal within this time-series. It is confusing to describe but I think a lower-frequency pattern can be transmitted in a higher-frequency medium. Imagine tuning to a radio station and hearing a single tone. But then within this tone would be tiny variations between each wave period. These variations could be processed using the methods from my previous post and the message found as sampled at the frequency of the analog-to-digital converter.</p>
+<p>The frequency of the A2D converter could then be used as a broadcast frequency on which to broadcast messages encrypted by the message found on the original radio station.</p>
+<p>We can imagine a system of “major stations” with the power to broadcast &amp; recieve widely a signal, and “minor stations” which operate more locally.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./wavelet_residual_am_recieving.svg" class="img-fluid figure-img"></p>
-<figcaption>wavelet_residual_am_image</figcaption>
+<p><img src="./multifreq-transmission-mesh.svg" class="img-fluid figure-img"></p>
+<figcaption>mesh depcition</figcaption>
 </figure>
 </div>
+<p>A “Major station” signal can act as decoding key for minor station signals.</p>
+<p>low freq message can be used to encrypt higher freq messages.</p>
+<p>multi-frequency stations input higher-freq messages and choose to continue outputting current message or begin rebroadcasting message from higher-freq transmitting neighbor.</p>
+<p>So here we have a “trustless” ham radio encryption system? Little stations can speak to each other while blessed by the wider transmission. Stations outside of the spacetime covered by the major station will only be able to understand other minor stations if they have memory of the major station transmission.</p>
 
 
 
@@ -264,7 +260,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/7yl4r\.github\.io\/tylar_info\/");
+      var filterRegex = new RegExp("https:\/\/7yl4r\.github\.io\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

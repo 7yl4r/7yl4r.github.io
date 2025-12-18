@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>cheatsheet – tylar.info</title>
+<title>Tylar’s Blog – tylar.info</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,6 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -100,15 +68,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -143,26 +169,382 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Tylar’s Blog</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(12)</span></div></div></div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
 
-<p>This is a cheatsheet of things I might want ot copy-paste</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create new blog post</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> fn.sh <span class="kw">&amp;&amp;</span> <span class="ex">newPost</span> postNameHere</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># push gh-pages</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> publish gh-pages <span class="at">--no-prompt</span> <span class="at">--no-browser</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 
-</main> <!-- /main -->
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1706158800000" data-listing-file-modified-sort="1765548894309" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="232">
+<div class="thumbnail">
+<p><a href="./posts/gee-rbnerr-wv-image-choosing/index.html" class="no-external"></a></p><a href="./posts/gee-rbnerr-wv-image-choosing/index.html" class="no-external">
+<p class="card-img-top"><img src="posts/gee-rbnerr-wv-image-choosing/coverMap.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/gee-rbnerr-wv-image-choosing/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/gee-rbnerr-wv-image-choosing/index.html" class="no-external">Choosing Images for Rookery Bay NERR in GEE</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/gee-rbnerr-wv-image-choosing/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/gee-rbnerr-wv-image-choosing/index.html" class="no-external">Today I am working to select the “best” satellite images for input into a machine learning model. We want full coverage of the RBNERR area but we are also looking for…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/gee-rbnerr-wv-image-choosing/index.html" class="no-external">
+<div class="listing-date">
+Jan 25, 2024
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-listing-date-sort="NaN" data-listing-file-modified-sort="1765548894309" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="318">
+<div class="thumbnail">
+<p><a href="./posts/imars-rsclass-2023/index.html" class="no-external"></a></p><a href="./posts/imars-rsclass-2023/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/imars-rsclass-2023/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/imars-rsclass-2023/index.html" class="no-external">{{POSTTITLE}}</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/imars-rsclass-2023/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/imars-rsclass-2023/index.html" class="no-external">Students of the USF remote sensing course completed projects using google earth engine in order to attempt classification of benthic cover. Projects included:</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/imars-rsclass-2023/index.html" class="no-external">
+<div class="listing-date">
+Invalid Date
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1765515600000" data-listing-file-modified-sort="1766071582885" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1180">
+<div class="thumbnail">
+<p><a href="./posts/prithvi-seagrass/index.html" class="no-external"></a></p><a href="./posts/prithvi-seagrass/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/prithvi-seagrass/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/prithvi-seagrass/index.html" class="no-external">Seagrass Mapping with NASA Prithvi-EO</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/prithvi-seagrass/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/prithvi-seagrass/index.html" class="no-external">An attempt to fine-tune Prithvi-EO using IMaRS SIMM project seagrass maps.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/prithvi-seagrass/index.html" class="no-external">
+<div class="listing-date">
+Dec 12, 2025
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1708405200000" data-listing-file-modified-sort="1765548894309" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="336">
+<div class="thumbnail">
+<p><a href="./posts/laptop-hdd-repartition/index.html" class="no-external"></a></p><a href="./posts/laptop-hdd-repartition/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/laptop-hdd-repartition/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/laptop-hdd-repartition/index.html" class="no-external">Laptop HDD RePartition</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/laptop-hdd-repartition/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/laptop-hdd-repartition/index.html" class="no-external">My laptop hard drive is “full”.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/laptop-hdd-repartition/index.html" class="no-external">
+<div class="listing-date">
+Feb 20, 2024
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1705381200000" data-listing-file-modified-sort="1765548894309" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="24">
+<div class="thumbnail">
+<p><a href="./posts/phytoclass-gui-updates/index.html" class="no-external"></a></p><a href="./posts/phytoclass-gui-updates/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/phytoclass-gui-updates/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/phytoclass-gui-updates/index.html" class="no-external">Phytoclass GUI Updates</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/phytoclass-gui-updates/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/phytoclass-gui-updates/index.html" class="no-external">Doing a last-minute attempt at resolving the TODO items I collected in the prototype phytoclass GUI last month. The amount of requested changes feels overwhelming</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/phytoclass-gui-updates/index.html" class="no-external">
+<div class="listing-date">
+Jan 16, 2024
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1705381200000" data-listing-file-modified-sort="1765548894306" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="40">
+<div class="thumbnail">
+<p><a href="./posts/calcofi-clone/index.html" class="no-external"></a></p><a href="./posts/calcofi-clone/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/calcofi-clone/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/calcofi-clone/index.html" class="no-external">CalCOFI Server Clone Attempt</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/calcofi-clone/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/calcofi-clone/index.html" class="no-external">Attempting to clone the CalCOFI server to see if we can reuse the docker config.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/calcofi-clone/index.html" class="no-external">
+<div class="listing-date">
+Jan 16, 2024
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-listing-date-sort="1705294800000" data-listing-file-modified-sort="1765548894309" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="75">
+<div class="thumbnail">
+<p><a href="./posts/rainbow-river-2024-01/index.html" class="no-external"></a></p><a href="./posts/rainbow-river-2024-01/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/rainbow-river-2024-01/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/rainbow-river-2024-01/index.html" class="no-external">Rainbow River Trek 2024-01</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/rainbow-river-2024-01/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/rainbow-river-2024-01/index.html" class="no-external">January is a good time to find manatees in the springs so let’s plan a trip.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/rainbow-river-2024-01/index.html" class="no-external">
+<div class="listing-date">
+Jan 15, 2024
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-listing-date-sort="1704344400000" data-listing-file-modified-sort="1765548894309" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1080">
+<div class="thumbnail">
+<p><a href="./posts/researcher-workshops-brainstorming/index.html" class="no-external"></a></p><a href="./posts/researcher-workshops-brainstorming/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/researcher-workshops-brainstorming/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/researcher-workshops-brainstorming/index.html" class="no-external">Brainstorming USF Libraries Researcher Workshop Topics</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/researcher-workshops-brainstorming/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/researcher-workshops-brainstorming/index.html" class="no-external">I am brainstorming presentation ideas.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/researcher-workshops-brainstorming/index.html" class="no-external">
+<div class="listing-date">
+Jan 4, 2024
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-listing-date-sort="1704085200000" data-listing-file-modified-sort="1765548894291" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="449">
+<div class="thumbnail">
+<p><a href="./posts/bbbb-electrical-victron-connection/index.html" class="no-external"></a></p><a href="./posts/bbbb-electrical-victron-connection/index.html" class="no-external">
+<p class="card-img-top"><img src="posts/bbbb-electrical-victron-connection/inverter-ac-in-wires-disconnected.jpg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/bbbb-electrical-victron-connection/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/bbbb-electrical-victron-connection/index.html" class="no-external">Bus Victron Electrical Connection</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/bbbb-electrical-victron-connection/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/bbbb-electrical-victron-connection/index.html" class="no-external">Working to install shore power on the bus today. I wired up the following circuit</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/bbbb-electrical-victron-connection/index.html" class="no-external">
+<div class="listing-date">
+Jan 1, 2024
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-listing-date-sort="1703739600000" data-listing-file-modified-sort="1765548894306" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="80">
+<div class="thumbnail">
+<p><a href="./posts/gee-multih-usvi/index.html" class="no-external"></a></p><a href="./posts/gee-multih-usvi/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/gee-multih-usvi/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/gee-multih-usvi/index.html" class="no-external">GEE DwC-like Ground Truth for USVI Corals</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/gee-multih-usvi/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/gee-multih-usvi/index.html" class="no-external">Working with Chelsea Bryant today to import some satellite-derived benthic species data into google earth engine. I have done similar things before with Rookery Bay and…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/gee-multih-usvi/index.html" class="no-external">
+<div class="listing-date">
+Dec 28, 2023
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="10" data-listing-date-sort="1703653200000" data-listing-file-modified-sort="1765548894309" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="46">
+<div class="thumbnail">
+<p><a href="./posts/quarto-blog-config/index.html" class="no-external"></a></p><a href="./posts/quarto-blog-config/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/quarto-blog-config/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/quarto-blog-config/index.html" class="no-external">Quarto Blog Config</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/quarto-blog-config/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/quarto-blog-config/index.html" class="no-external">Created a template for posts and a cheatsheet I can copy-paste from for this blog. Looked at using cookiecutter for creating the post but decided that was overkill. The…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/quarto-blog-config/index.html" class="no-external">
+<div class="listing-date">
+Dec 27, 2023
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="11" data-listing-date-sort="1702962000000" data-listing-file-modified-sort="1765548894309" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="839">
+<div class="thumbnail">
+<p><a href="./posts/quarto-blog-init/index.html" class="no-external"></a></p><a href="./posts/quarto-blog-init/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/quarto-blog-init/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/quarto-blog-init/index.html" class="no-external">Quarto Blog Init</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/quarto-blog-init/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/quarto-blog-init/index.html" class="no-external">This first blog post is about setting up this blog. Quarto &amp; RStudio were already set up on my laptop so getting started was easy.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/quarto-blog-init/index.html" class="no-external">
+<div class="listing-date">
+Dec 19, 2023
+</div>
+<div class="listing-author">
+Tylar
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

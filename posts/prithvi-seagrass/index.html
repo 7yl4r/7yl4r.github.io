@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tylar">
-<meta name="dcterms.date" content="2024-02-29">
+<meta name="dcterms.date" content="2025-12-12">
 
-<title>Trustless Radio Broadcasting – tylar.info</title>
+<title>Seagrass Mapping with NASA Prithvi-EO – tylar.info</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -91,10 +91,6 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Blog</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../../index/index.html"> 
 <span class="menu-text">About the Author</span></a>
   </li>  
@@ -118,11 +114,8 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Trustless Radio Broadcasting</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">Radio</div>
-              </div>
-                  </div>
+      <h1 class="title">Seagrass Mapping with NASA Prithvi-EO</h1>
+                      </div>
   </div>
     
   
@@ -138,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 29, 2024</p>
+        <p class="date">December 12, 2025</p>
       </div>
     </div>
     
@@ -157,23 +150,145 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>Tonight I am wondering on why my recent “SineWave Residual Modulation” might be useful and I think it has something to do with “trust” or… more enigmatically stated: “shared language”. Supersampling a sinusoidal signal and finding a steady signal in the residuals could be a way to encrypt information. Any swath of spacetime where the lower-frequency timing signal would be detectable would have access to the key, and messages on higher-frequencies could be decrypted using that key. The supersampling frequency would be the same as the new recieving frequency.</p>
-<p>But also maybe I am having some confusion about how the antenna systems work. I am trying to read about <a href="https://en.wikipedia.org/wiki/Software-defined_radio">“Software Defined Radio”</a> but still struggling with some concepts.</p>
-<p>An antenna (or perhaps more accurately, an RF Frontend) is designed to pick up ((and/or?) transmit) a specific frequency. At this selected frequency a signal is detected and can be captured as a time-series. The processing I am referring to takes place within a detected periodic signal within this time-series. It is confusing to describe but I think a lower-frequency pattern can be transmitted in a higher-frequency medium. Imagine tuning to a radio station and hearing a single tone. But then within this tone would be tiny variations between each wave period. These variations could be processed using the methods from my previous post and the message found as sampled at the frequency of the analog-to-digital converter.</p>
-<p>The frequency of the A2D converter could then be used as a broadcast frequency on which to broadcast messages encrypted by the message found on the original radio station.</p>
-<p>We can imagine a system of “major stations” with the power to broadcast &amp; recieve widely a signal, and “minor stations” which operate more locally.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./multifreq-transmission-mesh.svg" class="img-fluid figure-img"></p>
-<figcaption>mesh depcition</figcaption>
-</figure>
-</div>
-<p>A “Major station” signal can act as decoding key for minor station signals.</p>
-<p>low freq message can be used to encrypt higher freq messages.</p>
-<p>multi-frequency stations input higher-freq messages and choose to continue outputting current message or begin rebroadcasting message from higher-freq transmitting neighbor.</p>
-<p>So here we have a “trustless” ham radio encryption system? Little stations can speak to each other while blessed by the wider transmission. Stations outside of the spacetime covered by the major station will only be able to understand other minor stations if they have memory of the major station transmission.</p>
+<p>An attempt to fine-tune Prithvi-EO using IMaRS SIMM project seagrass maps.</p>
+<p>Initial starting point is <a href="https://github.com/Prithvi-EO/notebooks/prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb">this Prithvi-EO notebook</a>.</p>
+<section id="caveats" class="level2">
+<h2 class="anchored" data-anchor-id="caveats">Caveats</h2>
+<p>The IMaRS SIMM project uses Planet imagery, so the spectra do not align perfectly with Prithvi’s knowledge (based on Sentinel &amp; Landsat). ChatGPT says Prithvi’s knowledge is sensor-agnostic. I have chosen to trust this statement.</p>
+</section>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<section id="the-simm-seagrass-project" class="level3">
+<h3 class="anchored" data-anchor-id="the-simm-seagrass-project">The SIMM Seagrass Project</h3>
+<p>From the SIMM Seagrass project two images are obtained of the St Andrew’s sound region.</p>
+<ol type="1">
+<li>A seagrass classification .tif created using the mode of classifications on images taken throughout a year.</li>
+<li>A spectral mean .tif created using the same images used to generate classifications.</li>
+</ol>
+<p>The aggregations use a total of 138 images covering 2022-2024, one aggregation is created for each year.</p>
+<p>The 2024 year is selected for creating this dataset. The 2024 spectral mean image is built from 72 images. This image cannot be shared due to licensing restrictions.</p>
+<p>The seagrass image can be downloaded <a href="https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui">here</a>. In addition to application of the seagrass classifier (GEE script available [here](From the SIMM Seagrass project two images are obtained of the St Andrew’s sound region.</p>
+<ol type="1">
+<li>A seagrass classification .tif created using the mode of classifications on images taken throughout a year.</li>
+<li>A spectral median .tif created using all Planet SuperDove images (346 images).</li>
+</ol>
+<p>The spectral mean image cannot be shared due to licensing restrictions. The GEE script to generate this image is <a href="https://code.earthengine.google.com/de9e9e1dc344d4cf8c234b30809665b8">here</a>. This script will not work unless you have access to the (restricted) Planet SuperDove image collection asset.</p>
+<p>The seagrass image for 2024 can be downloaded <a href="https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui">here</a>. In addition to application of the seagrass classifier (GEE script available <a href="https://code.earthengine.google.com/23d1c15a67dfbc71564b67afdf394873">here</a>), manal adjustments may have been made to improve the final product.</p>
+</section>
+</section>
+<section id="create-training-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="create-training-dataset">Create Training Dataset</h2>
+<p>The notebook expects input data for fine-tuning in the <code>../data/</code> directory. These files should be in pairs like:</p>
+<ul>
+<li>chip_025_082.mask.tif</li>
+<li>chip_025_082.merged.tif</li>
+</ul>
+<p>The mask is the classification (seagrass yes/no). The merged file is the spectral bands.</p>
+<section id="attempt-1-google-earth-engine" class="level3">
+<h3 class="anchored" data-anchor-id="attempt-1-google-earth-engine">Attempt (1) : Google Earth Engine</h3>
+<p>To create a fine-tuning dataset of patches, the GEE addSeagrass method developed for the SIMM Seagrass project along with the planet superdove imagery already ingested into GEE are used. The spectral images and the seagrass layer produced need to be cut into patches.</p>
+<p>An initial attempt to create this script with ChatGPT (transcript <a href="https://chatgpt.com/share/693c60fa-95e4-800d-905b-e96a00b0eb63">here</a>) failed.</p>
+<p>An attempt to work with Claude to accomplish this (artifact <a href="https://claude.ai/public/artifacts/4c638343-6835-4e91-bdaa-b0c1361f7e7d">here</a>) ended in moderate success. Patches can be exported with one GEE task per patch in batches. This necessitates clicking run on every patch export. For a few 100 patches this is fine, but it is recommended to tune with a minimum of 1000 patches.</p>
+<p>The python API allows automatic starting of tasks, but the generation of the seagrass maps is done in GEE javascript. The .tif outputs of these scripts can be used locally rather than using GEE to chunk up the images into patches.</p>
+</section>
+<section id="attempt-2-cutting-patches-with-python" class="level3">
+<h3 class="anchored" data-anchor-id="attempt-2-cutting-patches-with-python">Attempt (2) : Cutting patches with python</h3>
+<p>The SVM classification as described above should be <code>annual_median_selectedBands_2024.tif</code>.</p>
+<p>The 8b image is expected to have 3 time-steps in the bands. Three multispectral images from three time points are expected, with bands in the _merged.tif files ordered like</p>
+<pre><code>[t0_b0, t0_b1, ..., t0_b7,
+ t1_b0, t1_b1, ..., t1_b7,
+ t2_b0, t2_b1, ..., t2_b7]</code></pre>
+<p>A GEE script to create this image using three composite (median) images from for images from years 2023-2025 was created <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fscratch%3Aprithvi_planet_median_creation">here</a>. The seasons were chosen using <a href="https://chatgpt.com/share/69419963-2858-800d-a6ab-44837f7175d1">this ChatGPT query</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 11%">
+<col style="width: 21%">
+<col style="width: 19%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Season</th>
+<th>Months</th>
+<th>Optical Regime</th>
+<th>Seagrass Detectability</th>
+<th>Recommended Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>High Attenuation</strong></td>
+<td>Jan–Apr</td>
+<td>High CDOM + sediment</td>
+<td>Poor</td>
+<td>Avoid for benthic mapping</td>
+</tr>
+<tr class="even">
+<td><strong>Transitional</strong></td>
+<td>May–early Jul</td>
+<td>Mixed clarity</td>
+<td>Moderate, variable</td>
+<td>Supplemental / temporal fusion</td>
+</tr>
+<tr class="odd">
+<td><strong>Peak Visibility</strong></td>
+<td>Late Jul–Oct</td>
+<td>Clear water, deep light</td>
+<td>Excellent</td>
+<td>Primary training &amp; mapping</td>
+</tr>
+<tr class="even">
+<td><em>(Excluded / Variable)</em></td>
+<td>Nov–Dec</td>
+<td>Storm-driven variability</td>
+<td>Unreliable</td>
+<td>Use selectively</td>
+</tr>
+</tbody>
+</table>
+<p>The Nov-Dec period was excluded. The total images used for each seasonal composite are:</p>
+<ul>
+<li>High Attenuation (Jan-Apr) - Image count: 46</li>
+<li>Transitional (May-early Jul) - Image count: 10</li>
+<li>Peak Visibility (Late Jul-Oct) - Image count: 92</li>
+</ul>
+<p>Based on visual interpretation of the true-color display, the seagrass areas appear to have different spectral signatures in the seagrass regions for each season. This added temporal information should increase the accuracy of the foundation model’s classification product.</p>
+<p>The resulting export is saved as 9 <em>shards</em> because a single .tif would be too large. The download from gdrive comes in multiple parts because a single .zip would be too large. After unzipping each .zip, the files are put into a single directory and used with the extract_tuning_patches.py script.</p>
+<p>Preparation of tuning patches was completed with <a href="https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/py/extract_tuning_patches.py">this script</a>.</p>
+<p>The patches were then compressed (<code>tar -cvjf data/seagrass_tuning_patches.tar.bz2 data/tuning_patches</code>) and the compressed file was uploaded to Google Drive.</p>
+</section>
+</section>
+<section id="fine-tuning-and-using-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="fine-tuning-and-using-the-model">Fine-tuning and using the model</h2>
+<p>A jupyter notebook <a href="https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/prithvi_v2_eo_300_tl_unet_seagrass.ipynb">prithvi_*seagrass.ipynb</a> was created from the prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb starting point. Modifications were made to :</p>
+<ol type="1">
+<li>load the training dataset</li>
+<li>create relevant classes derived from Crop classification classes</li>
+</ol>
+<ul>
+<li>add required means and std_dev for each band. (see below)
+<ul>
+<li>it is assumed these are calculated from patch chips.</li>
+<li>a script to do this calculation was created: <a href="https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/py/calculate_chip_statistics.py">calculate_chip_statistics.py</a></li>
+</ul></li>
+</ul>
+<ol start="3" type="1">
+<li>apply model to an unseen image to create classification</li>
+</ol>
+<section id="mean-and-std_dev-calculations-for-each-band" class="level3">
+<h3 class="anchored" data-anchor-id="mean-and-std_dev-calculations-for-each-band">Mean and Std_dev calculations for each band</h3>
+<p>The .ipynb expects mean and std_dev statistics for each band. I do not have a good understanding of what these statistics are and what purpose they serve in the .ipynb. It seems safe to assume they are for data normalization. The values being used are from a median image made from the year 2024. It is assumed that these values are not significantly different than if statistics were calculated on all 24 (8 spectral x 3 temporal) bands reduced across the temporal dimension into 8 statistics. The calculate_chip_statistics.py script could be updated to do this calculation. It is expected that the values would be very similar to the “legacy” values currently in the .ipynb.</p>
+</section>
+<section id="unseen-training-image" class="level3">
+<h3 class="anchored" data-anchor-id="unseen-training-image">Unseen Training Image</h3>
+<p>The aforementioned GEE script used to generate 3-time-step seasonal images was used with images for the year 2020. This is entirely unseen by the model (which was generated from a median taken 2023-2025).</p>
+<p>The image is saved to google drive from the script, and the filepath is used in the .ipynb to download the image into the colab runtime.</p>
+<p>The model is run on the image to produce a seagrass classification image.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -268,7 +383,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/7yl4r\.github\.io\/tylar_info\/");
+      var filterRegex = new RegExp("https:\/\/7yl4r\.github\.io\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
