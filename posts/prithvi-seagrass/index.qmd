@@ -6,7 +6,7 @@ date: "2025-12-12"
 
 An attempt to fine-tune Prithvi-EO using IMaRS SIMM project seagrass maps.
 
-Initial starting point is [this Prithvi-EO notebook](https://github.com/Prithvi-EO/notebooks/prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb).
+This work is based on [this  Prithvi-EO notebook](https://github.com/Prithvi-EO/notebooks/prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb).
 
 
 ## Caveats
@@ -31,7 +31,7 @@ The 2024 spectral mean image is built from 72 images.
 This image cannot be shared due to licensing restrictions.
 
 The seagrass image can be downloaded [here](https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui).
-In addition to application of the seagrass classifier (GEE script available [here](From the SIMM Seagrass project two images are obtained of the St Andrew's sound region.
+From the SIMM Seagrass project two images are obtained of the St Andrew's sound region.
 
 1. A seagrass classification .tif created using the mode of classifications on images taken throughout a year.
 2. A spectral median .tif created using all Planet SuperDove images (346 images).
@@ -85,7 +85,7 @@ Three multispectral images from three time points are expected, with bands in th
  t2_b0, t2_b1, ..., t2_b7]
 ```
 
-A GEE script to create this image using three composite (median) images from for images from years 2023-2025 was created [here](https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fscratch%3Aprithvi_planet_median_creation).
+A GEE script to create this image using three composite (median) images from for images from years 2023-2025 was created [here](https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fprithvi%3Aprithvi_planet_median_creation)
 The seasons were chosen using [this ChatGPT query](https://chatgpt.com/share/69419963-2858-800d-a6ab-44837f7175d1).
 
 | Season                  | Months        | Optical Regime           | Seagrass Detectability | Recommended Use                |
