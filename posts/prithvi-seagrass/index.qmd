@@ -145,3 +145,5 @@ The aforementioned GEE script used to generate 3-time-step seasonal images was u
 This is entirely unseen by the model (which was generated from a median taken 2023-2025).
 
 The image is saved to google drive from the script, and the filepath is used in the .ipynb to download the image into the colab runtime.
+
+The model is run on the image to produce a seagrass classification image.
