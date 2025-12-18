@@ -1,0 +1,147 @@
+---
+title: "Seagrass Mapping with NASA Prithvi-EO"
+author: "Tylar"
+date: "2025-12-12"
+---
+
+An attempt to fine-tune Prithvi-EO using IMaRS SIMM project seagrass maps.
+
+Initial starting point is [this Prithvi-EO notebook](https://github.com/Prithvi-EO/notebooks/prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb).
+
+
+## Caveats
+
+The IMaRS SIMM project uses Planet imagery, so the spectra do not align perfectly with Prithvi's knowledge (based on Sentinel & Landsat).
+ChatGPT says Prithvi's knowledge is sensor-agnostic.
+I have chosen to trust this statement.
+
+
+## Background
+### The SIMM Seagrass Project
+
+From the SIMM Seagrass project two images are obtained of the St Andrew's sound region.
+
+1. A seagrass classification .tif created using the mode of classifications on images taken throughout a year.
+2. A spectral mean .tif created using the same images used to generate classifications.
+
+The aggregations use a total of 138 images covering 2022-2024, one aggregation is created for each year.
+
+The 2024 year is selected for creating this dataset.
+The 2024 spectral mean image is built from 72 images.
+This image cannot be shared due to licensing restrictions.
+
+The seagrass image can be downloaded [here](https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui).
+In addition to application of the seagrass classifier (GEE script available [here](From the SIMM Seagrass project two images are obtained of the St Andrew's sound region.
+
+1. A seagrass classification .tif created using the mode of classifications on images taken throughout a year.
+2. A spectral median .tif created using all Planet SuperDove images (346 images).
+
+The spectral mean image cannot be shared due to licensing restrictions.
+The GEE script to generate this image is [here](https://code.earthengine.google.com/de9e9e1dc344d4cf8c234b30809665b8).
+This script will not work unless you have access to the (restricted) Planet SuperDove image collection asset.
+
+The seagrass image for 2024 can be downloaded [here](https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui).
+In addition to application of the seagrass classifier (GEE script available [here](https://code.earthengine.google.com/23d1c15a67dfbc71564b67afdf394873)), manal adjustments may have been made to improve the final product.
+
+
+## Create Training Dataset
+
+The notebook expects input data for fine-tuning in the `../data/` directory.
+These files should be in pairs like:
+
+* chip_025_082.mask.tif
+* chip_025_082.merged.tif
+
+The mask is the classification (seagrass yes/no).
+The merged file is the spectral bands.
+
+
+### Attempt (1) : Google Earth Engine
+
+To create a fine-tuning dataset of patches, the GEE addSeagrass method developed for the SIMM Seagrass project along with the planet superdove imagery already ingested into GEE are used.
+The spectral images and the seagrass layer produced need to be cut into patches.
+
+An initial attempt to create this script with ChatGPT (transcript [here](https://chatgpt.com/share/693c60fa-95e4-800d-905b-e96a00b0eb63)) failed.
+
+An attempt to work with Claude to accomplish this (artifact [here](https://claude.ai/public/artifacts/4c638343-6835-4e91-bdaa-b0c1361f7e7d)) ended in moderate success.
+Patches can be exported with one GEE task per patch in batches.
+This necessitates clicking run on every patch export.
+For a few 100 patches this is fine, but it is recommended to tune with a minimum of 1000 patches.
+
+The python API allows automatic starting of tasks, but the generation of the seagrass maps is done in GEE javascript.
+The .tif outputs of these scripts can be used locally rather than using GEE to chunk up the images into patches.
+
+
+### Attempt (2) : Cutting patches with python
+
+The SVM classification as described above should be `annual_median_selectedBands_2024.tif`.
+
+The 8b image is expected to have 3 time-steps in the bands.
+Three multispectral images from three time points are expected, with bands in the _merged.tif files ordered like
+
+```
+[t0_b0, t0_b1, ..., t0_b7,
+ t1_b0, t1_b1, ..., t1_b7,
+ t2_b0, t2_b1, ..., t2_b7]
+```
+
+A GEE script to create this image using three composite (median) images from for images from years 2023-2025 was created [here](https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fscratch%3Aprithvi_planet_median_creation).
+The seasons were chosen using [this ChatGPT query](https://chatgpt.com/share/69419963-2858-800d-a6ab-44837f7175d1).
+
+| Season                  | Months        | Optical Regime           | Seagrass Detectability | Recommended Use                |
+| ----------------------- | ------------- | ------------------------ | ---------------------- | ------------------------------ |
+| **High Attenuation**    | Jan–Apr       | High CDOM + sediment     | Poor                   | Avoid for benthic mapping      |
+| **Transitional**        | May–early Jul | Mixed clarity            | Moderate, variable     | Supplemental / temporal fusion |
+| **Peak Visibility**     | Late Jul–Oct  | Clear water, deep light  | Excellent              | Primary training & mapping     |
+| *(Excluded / Variable)* | Nov–Dec       | Storm-driven variability | Unreliable             | Use selectively                |
+
+The Nov-Dec period was excluded.
+The total images used for each seasonal composite are:
+
+* High Attenuation (Jan-Apr) - Image count: 46
+* Transitional (May-early Jul) - Image count: 10
+* Peak Visibility (Late Jul-Oct) - Image count: 92
+
+Based on visual interpretation of the true-color display, the seagrass areas appear to have different spectral signatures in the seagrass regions for each season.
+This added temporal information should increase the accuracy of the foundation model's classification product.
+
+The resulting export is saved as 9 *shards* because a single .tif would be too large.
+The download from gdrive comes in multiple parts because a single .zip would be too large.
+After unzipping each .zip, the files are put into a single directory and used with the extract_tuning_patches.py script.
+
+Preparation of tuning patches was completed with [this script](https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/py/extract_tuning_patches.py).
+
+The patches were then compressed (`tar -cvjf data/seagrass_tuning_patches.tar.bz2 data/tuning_patches
+`) and the compressed file was uploaded to Google Drive.
+
+
+## Fine-tuning and using the model
+
+A jupyter notebook [prithvi_*seagrass.ipynb](https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/prithvi_v2_eo_300_tl_unet_seagrass.ipynb) was created from the prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb starting point. 
+Modifications were made to :
+
+1. load the training dataset
+2. create relevant classes derived from Crop classification classes
+  * add required means and std_dev for each band. (see below)
+    * it is assumed these are calculated from patch chips.
+    * a script to do this calculation was created: [calculate_chip_statistics.py](https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/py/calculate_chip_statistics.py)
+3. apply model to an unseen image to create classification
+
+
+### Mean and Std_dev calculations for each band
+
+The .ipynb expects mean and std_dev statistics for each band. 
+I do not have a good understanding of what these statistics are and what purpose they serve in the .ipynb.
+It seems safe to assume they are for data normalization.
+The values being used are from a median image made from the year 2024.
+It is assumed that these values are not significantly different than if statistics were calculated on all 24 (8 spectral x 3 temporal) bands reduced across the temporal dimension into 8 statistics.
+The calculate_chip_statistics.py script could be updated to do this calculation.
+It is expected that the values would be very similar to the "legacy" values currently in the .ipynb.
+
+
+### Unseen Training Image
+
+The aforementioned GEE script used to generate 3-time-step seasonal images was used with images for the year 2020.
+This is entirely unseen by the model (which was generated from a median taken 2023-2025).
+
+The image is saved to google drive from the script, and the filepath is used in the .ipynb to download the image into the colab runtime.
