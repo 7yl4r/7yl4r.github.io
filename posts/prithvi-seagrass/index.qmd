@@ -177,7 +177,7 @@ The model has now learned to identify shallow areas, but is not differentiating 
 As a side note: Prithvi might be good at creating bathymetry.
 
 
-# v03 : In-progress : Addition of Sand Class
+# v03 : In-progress : Addition of Sand and Water Classes
 
 Current SIMM map is seagrass/non-seagrass only, but layers exist to highlight *some* areas of sand and deep water.
 For tuning the foundation model it is okay that not all sand&&water is identified.
@@ -190,6 +190,15 @@ Note that this image shows actual cover of seagrass and example locations of wat
 For this application completeness matters far less than correctness.
 
 This four-class image is now used as the _mask product for tuning the classifier.
+
+The resulting image is terrible.
+
+![seagrass-classification-v03](seagrass-classification-v03)
+
+Two potential explainations for the poor quality of this result are:
+
+1. The multi-class boundary was much harder for the model to learn than seagrass/non-seagrass
+2. The areas marked sand/water were not good representative samples of pure sand/water.
 
 
 ## TODO: Band Selection
