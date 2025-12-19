@@ -148,12 +148,17 @@ The image is saved to google drive from the script, and the filepath is used in 
 
 The model is run on the image to produce a seagrass classification image.
 
+
 # Results & Improvements to the Model
+
 Initial results from the classifier are poor quality.
 
 ![v01 map](seagrass-classification-v01.png)
 
 The classifier seems to be identifying water and non-water.
+
+
+## Land-Masking
 
 To address this issue the input .tif images are cropped with a land-mask before use.
 This is applied to both the chip and the to-classify image.
@@ -166,4 +171,46 @@ Running again after masking shows markedly improved results.
 
 The model has now learned to identify shallow areas, but is not differentiating between sand and seagrass.
 As a side note: Prithvi might be good at creating bathymetry.
+
+
+# In-progress : Addition of Sand Class
+
+Current SIMM map is seagrass/non-seagrass only, but layers exist to highlight *some* areas of sand.
+For tuning the foundation model it is okay that not all sand is identified.
+The sand and water polygons were added to the final seagrass image to create a new product, the SIMM-classes-product.
+[This GEE script was created for this task](https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fimars-simm%3Aexport_combined_classification_product_for_prithvi).
+
+![simm-classes-product](simm-classes-product.png)
+
+Note that this image shows actual cover of seagrass and example locations of water and sand; all sand&&water is not marked.
+
+This four-class image is now used as the _mask product for tuning the classifier.
+
+
+## TODO: Band Selection
+
+Addition of ratio bands and bands with temporal components may be useful for the model.
+The following are considered for addition:
+
+1. Ratio Medians For Cleaner Signals
+  1. Turbidity Proxy Blue/Green Median & Variance
+  2. coastal/green
+  3. green I / green II
+  4. log(Blue / Green)
+2. Variances for Temporal Stability Discrimination
+  1. Green
+  2. Blue/Green
+3. Max-min for Temporal Change Magnitude Discrimination
+  1. Green
+
+In addition, the NIR and RedEdge could be dropped, as these are likely not useful for underwater cover.
+Although the NIR may be useful for differentiating water vs land.
+
+These modifications should be made to the GEE exporting script so that the new selection of bands will be exported rather than the 8 medians.
+Because there are 3 time-steps included, the total number of bands will be the number of per-aggregation bands times 3.
+
+
+## TODO: Per-Chip Normalization
+To remove the ability of the model to learn on brightness alone, the chips can be normalized independently.
+Because the overall scene brightness characteristics are removed, the model is forced to focus on texture and shape.
 
