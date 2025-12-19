@@ -151,7 +151,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>An attempt to fine-tune Prithvi-EO using IMaRS SIMM project seagrass maps.</p>
-<p>Initial starting point is <a href="https://github.com/Prithvi-EO/notebooks/prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb">this Prithvi-EO notebook</a>.</p>
+<p>This work is based on <a href="https://github.com/Prithvi-EO/notebooks/prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb">this Prithvi-EO notebook</a>.</p>
 <section id="caveats" class="level2">
 <h2 class="anchored" data-anchor-id="caveats">Caveats</h2>
 <p>The IMaRS SIMM project uses Planet imagery, so the spectra do not align perfectly with Prithvi’s knowledge (based on Sentinel &amp; Landsat). ChatGPT says Prithvi’s knowledge is sensor-agnostic. I have chosen to trust this statement.</p>
@@ -167,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p>The aggregations use a total of 138 images covering 2022-2024, one aggregation is created for each year.</p>
 <p>The 2024 year is selected for creating this dataset. The 2024 spectral mean image is built from 72 images. This image cannot be shared due to licensing restrictions.</p>
-<p>The seagrass image can be downloaded <a href="https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui">here</a>. In addition to application of the seagrass classifier (GEE script available [here](From the SIMM Seagrass project two images are obtained of the St Andrew’s sound region.</p>
+<p>The seagrass image can be downloaded <a href="https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui">here</a>. From the SIMM Seagrass project two images are obtained of the St Andrew’s sound region.</p>
 <ol type="1">
 <li>A seagrass classification .tif created using the mode of classifications on images taken throughout a year.</li>
 <li>A spectral median .tif created using all Planet SuperDove images (346 images).</li>
@@ -198,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 <pre><code>[t0_b0, t0_b1, ..., t0_b7,
  t1_b0, t1_b1, ..., t1_b7,
  t2_b0, t2_b1, ..., t2_b7]</code></pre>
-<p>A GEE script to create this image using three composite (median) images from for images from years 2023-2025 was created <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fscratch%3Aprithvi_planet_median_creation">here</a>. The seasons were chosen using <a href="https://chatgpt.com/share/69419963-2858-800d-a6ab-44837f7175d1">this ChatGPT query</a>.</p>
+<p>A GEE script to create this image using three composite (median) images from for images from years 2023-2025 was created <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fprithvi%3Aprithvi_planet_median_creation">here</a> The seasons were chosen using <a href="https://chatgpt.com/share/69419963-2858-800d-a6ab-44837f7175d1">this ChatGPT query</a>.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 20%">
@@ -254,6 +254,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Peak Visibility (Late Jul-Oct) - Image count: 92</li>
 </ul>
 <p>Based on visual interpretation of the true-color display, the seagrass areas appear to have different spectral signatures in the seagrass regions for each season. This added temporal information should increase the accuracy of the foundation model’s classification product.</p>
+<p>The resulting images do have some artifacts; the lines between passes are noticeable.</p>
 <p>The resulting export is saved as 9 <em>shards</em> because a single .tif would be too large. The download from gdrive comes in multiple parts because a single .zip would be too large. After unzipping each .zip, the files are put into a single directory and used with the extract_tuning_patches.py script.</p>
 <p>Preparation of tuning patches was completed with <a href="https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/py/extract_tuning_patches.py">this script</a>.</p>
 <p>The patches were then compressed (<code>tar -cvjf data/seagrass_tuning_patches.tar.bz2 data/tuning_patches</code>) and the compressed file was uploaded to Google Drive.</p>
@@ -285,6 +286,79 @@ ul.task-list li input[type="checkbox"] {
 <p>The aforementioned GEE script used to generate 3-time-step seasonal images was used with images for the year 2020. This is entirely unseen by the model (which was generated from a median taken 2023-2025).</p>
 <p>The image is saved to google drive from the script, and the filepath is used in the .ipynb to download the image into the colab runtime.</p>
 <p>The model is run on the image to produce a seagrass classification image.</p>
+</section>
+</section>
+<section id="results-improvements-to-the-model" class="level1">
+<h1>Results &amp; Improvements to the Model</h1>
+<section id="v01" class="level2">
+<h2 class="anchored" data-anchor-id="v01">v01</h2>
+<p>Initial results from the classifier are poor quality.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v01.png" class="img-fluid figure-img"></p>
+<figcaption>v01 map</figcaption>
+</figure>
+</div>
+<p>The classifier seems to be identifying water and non-water.</p>
+</section>
+<section id="v02-added-land-masking" class="level2">
+<h2 class="anchored" data-anchor-id="v02-added-land-masking">v02 : Added Land-Masking</h2>
+<p>To address this issue the input .tif images are cropped with a land-mask before use. This is applied to both the chip and the to-classify image.</p>
+<p>The <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fprithvi%3Aprithvi_planet_median_creation">GEE image export script</a> has been updated.</p>
+<p>Running again after masking shows markedly improved results.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v02.png" class="img-fluid figure-img"></p>
+<figcaption>v02 map</figcaption>
+</figure>
+</div>
+<p>The model has now learned to identify shallow areas, but is not differentiating between sand and seagrass. As a side note: Prithvi might be good at creating bathymetry.</p>
+</section>
+</section>
+<section id="v03-in-progress-addition-of-sand-and-water-classes" class="level1">
+<h1>v03 : In-progress : Addition of Sand and Water Classes</h1>
+<p>Current SIMM map is seagrass/non-seagrass only, but layers exist to highlight <em>some</em> areas of sand and deep water. For tuning the foundation model it is okay that not all sand&amp;&amp;water is identified. The sand and water polygons were added to the final seagrass image to create a new product, the SIMM-classes-product. <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fimars-simm%3Aexport_combined_classification_product_for_prithvi">This GEE script was created for this task</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="simm-classes-product.png" class="img-fluid figure-img"></p>
+<figcaption>simm-classes-product</figcaption>
+</figure>
+</div>
+<p>Note that this image shows actual cover of seagrass and example locations of water and sand; all sand&amp;&amp;water is not marked. For this application completeness matters far less than correctness.</p>
+<p>This four-class image is now used as the _mask product for tuning the classifier.</p>
+<p>The resulting image is terrible.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v03.png" class="img-fluid figure-img"></p>
+<figcaption>seagrass-classification-v03</figcaption>
+</figure>
+</div>
+<p>Two potential explainations for the poor quality of this result are:</p>
+<ol type="1">
+<li>The multi-class boundary was much harder for the model to learn than seagrass/non-seagrass</li>
+<li>The areas marked sand/water were not good representative samples of pure sand/water.</li>
+</ol>
+<section id="todo-band-selection" class="level2">
+<h2 class="anchored" data-anchor-id="todo-band-selection">TODO: Band Selection</h2>
+<p>Addition of ratio bands and bands with temporal components may be useful for the model. The following are considered for addition:</p>
+<ol type="1">
+<li>Ratio Medians For Cleaner Signals</li>
+<li>Turbidity Proxy Blue/Green Median &amp; Variance</li>
+<li>coastal/green</li>
+<li>green I / green II</li>
+<li>log(Blue / Green)</li>
+<li>Variances for Temporal Stability Discrimination</li>
+<li>Green</li>
+<li>Blue/Green</li>
+<li>Max-min for Temporal Change Magnitude Discrimination</li>
+<li>Green</li>
+</ol>
+<p>In addition, the NIR and RedEdge could be dropped, as these are likely not useful for underwater cover. Although the NIR may be useful for differentiating water vs land.</p>
+<p>These modifications should be made to the GEE exporting script so that the new selection of bands will be exported rather than the 8 medians. Because there are 3 time-steps included, the total number of bands will be the number of per-aggregation bands times 3.</p>
+</section>
+<section id="todo-per-chip-normalization" class="level2">
+<h2 class="anchored" data-anchor-id="todo-per-chip-normalization">TODO: Per-Chip Normalization</h2>
+<p>To remove the ability of the model to learn on brightness alone, the chips can be normalized independently. Because the overall scene brightness characteristics are removed, the model is forced to focus on texture and shape.</p>
 
 
 </section>
