@@ -105,6 +105,8 @@ The total images used for each seasonal composite are:
 Based on visual interpretation of the true-color display, the seagrass areas appear to have different spectral signatures in the seagrass regions for each season.
 This added temporal information should increase the accuracy of the foundation model's classification product.
 
+The resulting images do have some artifacts; the lines between passes are noticeable.
+
 The resulting export is saved as 9 *shards* because a single .tif would be too large.
 The download from gdrive comes in multiple parts because a single .zip would be too large.
 After unzipping each .zip, the files are put into a single directory and used with the extract_tuning_patches.py script.
@@ -151,6 +153,8 @@ The model is run on the image to produce a seagrass classification image.
 
 # Results & Improvements to the Model
 
+## v01
+
 Initial results from the classifier are poor quality.
 
 ![v01 map](seagrass-classification-v01.png)
@@ -158,7 +162,7 @@ Initial results from the classifier are poor quality.
 The classifier seems to be identifying water and non-water.
 
 
-## Land-Masking
+## v02 : Added Land-Masking
 
 To address this issue the input .tif images are cropped with a land-mask before use.
 This is applied to both the chip and the to-classify image.
@@ -173,16 +177,17 @@ The model has now learned to identify shallow areas, but is not differentiating 
 As a side note: Prithvi might be good at creating bathymetry.
 
 
-# In-progress : Addition of Sand Class
+# v03 : In-progress : Addition of Sand Class
 
-Current SIMM map is seagrass/non-seagrass only, but layers exist to highlight *some* areas of sand.
-For tuning the foundation model it is okay that not all sand is identified.
+Current SIMM map is seagrass/non-seagrass only, but layers exist to highlight *some* areas of sand and deep water.
+For tuning the foundation model it is okay that not all sand&&water is identified.
 The sand and water polygons were added to the final seagrass image to create a new product, the SIMM-classes-product.
 [This GEE script was created for this task](https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fimars-simm%3Aexport_combined_classification_product_for_prithvi).
 
 ![simm-classes-product](simm-classes-product.png)
 
 Note that this image shows actual cover of seagrass and example locations of water and sand; all sand&&water is not marked.
+For this application completeness matters far less than correctness.
 
 This four-class image is now used as the _mask product for tuning the classifier.
 
