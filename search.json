@@ -189,11 +189,32 @@
     "text": "v02 : Added Land-Masking\nTo address this issue the input .tif images are cropped with a land-mask before use. This is applied to both the chip and the to-classify image.\nThe GEE image export script has been updated.\nRunning again after masking shows markedly improved results.\n\n\n\nv02 map\n\n\nThe model has now learned to identify shallow areas, but is not differentiating between sand and seagrass. As a side note: Prithvi might be good at creating bathymetry."
   },
   {
+    "objectID": "posts/prithvi-seagrass/index.html#v05-switch-to-using-sentinel-imagery",
+    "href": "posts/prithvi-seagrass/index.html#v05-switch-to-using-sentinel-imagery",
+    "title": "Seagrass Mapping with NASA Prithvi-EO",
+    "section": "v05 : Switch to using Sentinel Imagery",
+    "text": "v05 : Switch to using Sentinel Imagery\nPerhaps it is the usage of Planet SuperDove imagery that is causing issues. We attempt to use sentinel imagery only to create a map.\nBecause sentinel 2 has more images we reduce to using 2024 only.\nHigh Attenuation (Jan-Apr) - Image count:\n23\nTransitional (May-early Jul) - Image count:\n15\nPeak Visibility (Late Jul-Oct) - Image count:\n22\nThe number of valid patches drops significantly due to the lower resolution of the S2 product:\n(base) tylar@tylar-laptop:~/repos/nasa-prithvi-wetlands$ python py/extract_tuning_patches.py \nDetected single TIF file: data/seasonal_s2_stack.tif\n\n============================================================\nProcessing spectral file 1/1: seasonal_s2_stack.tif\n============================================================\nCRS mismatch detected: EPSG:4326 vs EPSG:3746\nReprojecting mask to match spectral image...\nMask reprojected to match spectral image: (1306, 1585)\n\nExtracting 224x224 patches with stride 224\nNumber of spectral bands: 24\nWill extract up to 35 patches from this shard\n\nShard complete: 22 valid patches extracted\n\n============================================================\nExtraction complete!\n============================================================\nSpectral files processed: 1\nValid patches saved: 22\nPatches skipped: 13\nOutput directory: data/tuning_patches\n\nOrganizing patches into training and validation sets...\n\nDataset split created:\nTraining samples: 18\n  - Files in: data/tuning_patches/training_chips\n  - List file: training_data.txt\nValidation samples: 4\n  - Files in: data/tuning_patches/validation_chips\n  - List file: validation_data.txt\n\nChip naming format:\n  - Spectral: chip_XXXXX_merged.tif\n  - Mask: chip_XXXXX.mask.tif\n\nCleaning up temporary directories...\n  - Removed: data/tuning_patches/spectral\n  - Removed: data/tuning_patches/masks\n✓ Cleanup complete!\n\n✓ Patch extraction complete! Ready for Prithvi fine-tuning.\n\n!!! PROBLEM DISCOVERED IN PIPELINE !!!\nThis issue may affect previous versions. The tuning_patches directory is not cleared with each run. Chips existing in the directory before the script is run will be included in the compressed chip file.\nThis may have affected previous multi-class extractions. I am not certain if I manually cleared the tuning_patches directory. The extract_tuning_patches.py script has been updated to clear the directory. ——————\nThe patches are zipped and uploaded to GDrive.\nThe notebook is re-run.\n\n\n\nseagrass-classification-v05\n\n\nNo good."
+  },
+  {
+    "objectID": "posts/prithvi-seagrass/index.html#todo-s2-with-2-class",
+    "href": "posts/prithvi-seagrass/index.html#todo-s2-with-2-class",
+    "title": "Seagrass Mapping with NASA Prithvi-EO",
+    "section": "TODO: s2 with 2-class",
+    "text": "TODO: s2 with 2-class\nRolling back to 2-classes and s2 data."
+  },
+  {
     "objectID": "posts/prithvi-seagrass/index.html#todo-band-selection",
     "href": "posts/prithvi-seagrass/index.html#todo-band-selection",
     "title": "Seagrass Mapping with NASA Prithvi-EO",
     "section": "TODO: Band Selection",
     "text": "TODO: Band Selection\nAddition of ratio bands and bands with temporal components may be useful for the model. The following are considered for addition:\n\nRatio Medians For Cleaner Signals\nTurbidity Proxy Blue/Green Median & Variance\ncoastal/green\ngreen I / green II\nlog(Blue / Green)\nVariances for Temporal Stability Discrimination\nGreen\nBlue/Green\nMax-min for Temporal Change Magnitude Discrimination\nGreen\n\nIn addition, the NIR and RedEdge could be dropped, as these are likely not useful for underwater cover. Although the NIR may be useful for differentiating water vs land.\nThese modifications should be made to the GEE exporting script so that the new selection of bands will be exported rather than the 8 medians. Because there are 3 time-steps included, the total number of bands will be the number of per-aggregation bands times 3."
+  },
+  {
+    "objectID": "posts/prithvi-seagrass/index.html#todo-attempt-without-landmask-on-median",
+    "href": "posts/prithvi-seagrass/index.html#todo-attempt-without-landmask-on-median",
+    "title": "Seagrass Mapping with NASA Prithvi-EO",
+    "section": "TODO: attempt without landmask on median",
+    "text": "TODO: attempt without landmask on median\nPerhaps the land-masked median image is causing issues. We attempt to run the classifier with a full image."
   },
   {
     "objectID": "posts/prithvi-seagrass/index.html#todo-per-chip-normalization",
