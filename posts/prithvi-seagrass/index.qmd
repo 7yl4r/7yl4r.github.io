@@ -177,7 +177,7 @@ The model has now learned to identify shallow areas, but is not differentiating 
 As a side note: Prithvi might be good at creating bathymetry.
 
 
-# v03 : In-progress : Addition of Sand and Water Classes
+# v03 : Addition of Sand and Water Classes
 
 Current SIMM map is seagrass/non-seagrass only, but layers exist to highlight *some* areas of sand and deep water.
 For tuning the foundation model it is okay that not all sand&&water is identified.
@@ -201,6 +201,117 @@ Two potential explainations for the poor quality of this result are:
 2. The areas marked sand/water were not good representative samples of pure sand/water.
 
 
+# v04 : Addition of land class
+
+A second attempt was made to use multi-class classification.
+This time an additional class is introduced '4' for 'land'.
+
+![prithvi-v04-classes](prithvi-v04-classes.png)
+
+The before linked [imars-simm:export_combined_classification_product_for_prithvi script](https://code.earthengine.google.com/bf0ed24a840bbf7af9708906704168a6) has been updated.
+
+Tuning patches have been re-extracted using this new file and the masked 8b x 3-time-step means product.
+The new chips were compressed and uploaded to gdrive.
+Statistics were not re-calculated; the mean image has not changed since last calculation.
+
+The tuning and classification script was run again.
+
+![seagrass-classification-v04](seagrass-classification-v04.png)
+
+The result is again confusingly poor.
+
+
+## v05 : Switch to using Sentinel Imagery
+
+Perhaps it is the usage of Planet SuperDove imagery that is causing issues.
+We attempt to use sentinel imagery only to create a map.
+
+Because sentinel 2 has more images we reduce to using 2024 only.
+
+```
+High Attenuation (Jan-Apr) - Image count:
+23
+Transitional (May-early Jul) - Image count:
+15
+Peak Visibility (Late Jul-Oct) - Image count:
+22
+```
+
+The number of valid patches drops significantly due to the lower resolution of the S2 product:
+
+```
+(base) tylar@tylar-laptop:~/repos/nasa-prithvi-wetlands$ python py/extract_tuning_patches.py 
+Detected single TIF file: data/seasonal_s2_stack.tif
+
+============================================================
+Processing spectral file 1/1: seasonal_s2_stack.tif
+============================================================
+CRS mismatch detected: EPSG:4326 vs EPSG:3746
+Reprojecting mask to match spectral image...
+Mask reprojected to match spectral image: (1306, 1585)
+
+Extracting 224x224 patches with stride 224
+Number of spectral bands: 24
+Will extract up to 35 patches from this shard
+
+Shard complete: 22 valid patches extracted
+
+============================================================
+Extraction complete!
+============================================================
+Spectral files processed: 1
+Valid patches saved: 22
+Patches skipped: 13
+Output directory: data/tuning_patches
+
+Organizing patches into training and validation sets...
+
+Dataset split created:
+Training samples: 18
+  - Files in: data/tuning_patches/training_chips
+  - List file: training_data.txt
+Validation samples: 4
+  - Files in: data/tuning_patches/validation_chips
+  - List file: validation_data.txt
+
+Chip naming format:
+  - Spectral: chip_XXXXX_merged.tif
+  - Mask: chip_XXXXX.mask.tif
+
+Cleaning up temporary directories...
+  - Removed: data/tuning_patches/spectral
+  - Removed: data/tuning_patches/masks
+✓ Cleanup complete!
+
+✓ Patch extraction complete! Ready for Prithvi fine-tuning.
+```
+
+------------------
+
+!!! PROBLEM DISCOVERED IN PIPELINE !!!
+
+This issue may affect previous versions. 
+The tuning_patches directory is not cleared with each run.
+Chips existing in the directory before the script is run will be included in the compressed chip file.
+
+This may have affected previous multi-class extractions.
+I am not certain if I manually cleared the tuning_patches directory.
+The extract_tuning_patches.py script has been updated to clear the directory.
+------------------
+
+The patches are zipped and uploaded to GDrive.
+
+The notebook is re-run.
+
+![seagrass-classification-v05](seagrass-classification-v05.png)
+
+No good.
+
+## TODO: s2 with 2-class
+
+Rolling back to 2-classes and s2 data.
+
+
 ## TODO: Band Selection
 
 Addition of ratio bands and bands with temporal components may be useful for the model.
@@ -222,6 +333,12 @@ Although the NIR may be useful for differentiating water vs land.
 
 These modifications should be made to the GEE exporting script so that the new selection of bands will be exported rather than the 8 medians.
 Because there are 3 time-steps included, the total number of bands will be the number of per-aggregation bands times 3.
+
+
+## TODO: attempt without landmask on median
+
+Perhaps the land-masked median image is causing issues.
+We attempt to run the classifier with a full image.
 
 
 ## TODO: Per-Chip Normalization
