@@ -1,10 +1,9 @@
 ### New Post
 
 ```bash
-POSTNAME=my-new-post
 source fn.sh
-newPost $POSTNAME
-emacs posts/$POSTNAME/index.qmd
+newPost my-new-post-name
+emacs posts/YYYY-MM_$POSTNAME/index.qmd
 
 quarto publish
 ```
