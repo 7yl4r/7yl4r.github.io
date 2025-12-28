@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.54">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tylar">
+<meta name="dcterms.date" content="2025-12-12">
+
+<title>Seagrass Mapping with NASA Prithvi-EO – tylar.info</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">tylar.info</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index/index.html"> 
+<span class="menu-text">About the Author</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://imars.usf.edu"> 
+<span class="menu-text">IMaRS</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/7yl4r"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Seagrass Mapping with NASA Prithvi-EO</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Tylar </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 12, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>An attempt to fine-tune Prithvi-EO using IMaRS SIMM project seagrass maps.</p>
+<p>This work is based on <a href="https://github.com/Prithvi-EO/notebooks/prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb">this Prithvi-EO notebook</a>.</p>
+<section id="caveats" class="level2">
+<h2 class="anchored" data-anchor-id="caveats">Caveats</h2>
+<p>The IMaRS SIMM project uses Planet imagery, so the spectra do not align perfectly with Prithvi’s knowledge (based on Sentinel &amp; Landsat). ChatGPT says Prithvi’s knowledge is sensor-agnostic. I have chosen to trust this statement.</p>
+</section>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<section id="the-simm-seagrass-project" class="level3">
+<h3 class="anchored" data-anchor-id="the-simm-seagrass-project">The SIMM Seagrass Project</h3>
+<p>From the SIMM Seagrass project two images are obtained of the St Andrew’s sound region.</p>
+<ol type="1">
+<li>A seagrass classification .tif created using the mode of classifications on images taken throughout a year.</li>
+<li>A spectral mean .tif created using the same images used to generate classifications.</li>
+</ol>
+<p>The aggregations use a total of 138 images covering 2022-2024, one aggregation is created for each year.</p>
+<p>The 2024 year is selected for creating this dataset. The 2024 spectral mean image is built from 72 images. This image cannot be shared due to licensing restrictions.</p>
+<p>The seagrass image can be downloaded <a href="https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui">here</a>. From the SIMM Seagrass project two images are obtained of the St Andrew’s sound region.</p>
+<ol type="1">
+<li>A seagrass classification .tif created using the mode of classifications on images taken throughout a year.</li>
+<li>A spectral median .tif created using all Planet SuperDove images (346 images).</li>
+</ol>
+<p>The spectral mean image cannot be shared due to licensing restrictions. The GEE script to generate this image is <a href="https://code.earthengine.google.com/de9e9e1dc344d4cf8c234b30809665b8">here</a>. This script will not work unless you have access to the (restricted) Planet SuperDove image collection asset.</p>
+<p>The seagrass image for 2024 can be downloaded <a href="https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui">here</a>. In addition to application of the seagrass classifier (GEE script available <a href="https://code.earthengine.google.com/23d1c15a67dfbc71564b67afdf394873">here</a>), manal adjustments may have been made to improve the final product.</p>
+</section>
+</section>
+<section id="create-training-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="create-training-dataset">Create Training Dataset</h2>
+<p>The notebook expects input data for fine-tuning in the <code>../data/</code> directory. These files should be in pairs like:</p>
+<ul>
+<li>chip_025_082.mask.tif</li>
+<li>chip_025_082.merged.tif</li>
+</ul>
+<p>The mask is the classification (seagrass yes/no). The merged file is the spectral bands.</p>
+<section id="attempt-1-google-earth-engine" class="level3">
+<h3 class="anchored" data-anchor-id="attempt-1-google-earth-engine">Attempt (1) : Google Earth Engine</h3>
+<p>To create a fine-tuning dataset of patches, the GEE addSeagrass method developed for the SIMM Seagrass project along with the planet superdove imagery already ingested into GEE are used. The spectral images and the seagrass layer produced need to be cut into patches.</p>
+<p>An initial attempt to create this script with ChatGPT (transcript <a href="https://chatgpt.com/share/693c60fa-95e4-800d-905b-e96a00b0eb63">here</a>) failed.</p>
+<p>An attempt to work with Claude to accomplish this (artifact <a href="https://claude.ai/public/artifacts/4c638343-6835-4e91-bdaa-b0c1361f7e7d">here</a>) ended in moderate success. Patches can be exported with one GEE task per patch in batches. This necessitates clicking run on every patch export. For a few 100 patches this is fine, but it is recommended to tune with a minimum of 1000 patches.</p>
+<p>The python API allows automatic starting of tasks, but the generation of the seagrass maps is done in GEE javascript. The .tif outputs of these scripts can be used locally rather than using GEE to chunk up the images into patches.</p>
+</section>
+<section id="attempt-2-cutting-patches-with-python" class="level3">
+<h3 class="anchored" data-anchor-id="attempt-2-cutting-patches-with-python">Attempt (2) : Cutting patches with python</h3>
+<p>The SVM classification as described above should be <code>annual_median_selectedBands_2024.tif</code>.</p>
+<p>The 8b image is expected to have 3 time-steps in the bands. Three multispectral images from three time points are expected, with bands in the _merged.tif files ordered like</p>
+<pre><code>[t0_b0, t0_b1, ..., t0_b7,
+ t1_b0, t1_b1, ..., t1_b7,
+ t2_b0, t2_b1, ..., t2_b7]</code></pre>
+<p>A GEE script to create this image using three composite (median) images from for images from years 2023-2025 was created <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fprithvi%3Aprithvi_planet_median_creation">here</a> The seasons were chosen using <a href="https://chatgpt.com/share/69419963-2858-800d-a6ab-44837f7175d1">this ChatGPT query</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 11%">
+<col style="width: 21%">
+<col style="width: 19%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Season</th>
+<th>Months</th>
+<th>Optical Regime</th>
+<th>Seagrass Detectability</th>
+<th>Recommended Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>High Attenuation</strong></td>
+<td>Jan–Apr</td>
+<td>High CDOM + sediment</td>
+<td>Poor</td>
+<td>Avoid for benthic mapping</td>
+</tr>
+<tr class="even">
+<td><strong>Transitional</strong></td>
+<td>May–early Jul</td>
+<td>Mixed clarity</td>
+<td>Moderate, variable</td>
+<td>Supplemental / temporal fusion</td>
+</tr>
+<tr class="odd">
+<td><strong>Peak Visibility</strong></td>
+<td>Late Jul–Oct</td>
+<td>Clear water, deep light</td>
+<td>Excellent</td>
+<td>Primary training &amp; mapping</td>
+</tr>
+<tr class="even">
+<td><em>(Excluded / Variable)</em></td>
+<td>Nov–Dec</td>
+<td>Storm-driven variability</td>
+<td>Unreliable</td>
+<td>Use selectively</td>
+</tr>
+</tbody>
+</table>
+<p>The Nov-Dec period was excluded. The total images used for each seasonal composite are:</p>
+<ul>
+<li>High Attenuation (Jan-Apr) - Image count: 46</li>
+<li>Transitional (May-early Jul) - Image count: 10</li>
+<li>Peak Visibility (Late Jul-Oct) - Image count: 92</li>
+</ul>
+<p>Based on visual interpretation of the true-color display, the seagrass areas appear to have different spectral signatures in the seagrass regions for each season. This added temporal information should increase the accuracy of the foundation model’s classification product.</p>
+<p>The resulting images do have some artifacts; the lines between passes are noticeable.</p>
+<p>The resulting export is saved as 9 <em>shards</em> because a single .tif would be too large. The download from gdrive comes in multiple parts because a single .zip would be too large. After unzipping each .zip, the files are put into a single directory and used with the extract_tuning_patches.py script.</p>
+<p>Preparation of tuning patches was completed with <a href="https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/py/extract_tuning_patches.py">this script</a>.</p>
+<p>The patches were then compressed (<code>tar -cvjf data/seagrass_tuning_patches.tar.bz2 data/tuning_patches</code>) and the compressed file was uploaded to Google Drive.</p>
+</section>
+</section>
+<section id="fine-tuning-and-using-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="fine-tuning-and-using-the-model">Fine-tuning and using the model</h2>
+<p>A jupyter notebook <a href="https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/prithvi_v2_eo_300_tl_unet_seagrass.ipynb">prithvi_*seagrass.ipynb</a> was created from the prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb starting point. Modifications were made to :</p>
+<ol type="1">
+<li>load the training dataset</li>
+<li>create relevant classes derived from Crop classification classes</li>
+</ol>
+<ul>
+<li>add required means and std_dev for each band. (see below)
+<ul>
+<li>it is assumed these are calculated from patch chips.</li>
+<li>a script to do this calculation was created: <a href="https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/py/calculate_chip_statistics.py">calculate_chip_statistics.py</a></li>
+</ul></li>
+</ul>
+<ol start="3" type="1">
+<li>apply model to an unseen image to create classification</li>
+</ol>
+<section id="mean-and-std_dev-calculations-for-each-band" class="level3">
+<h3 class="anchored" data-anchor-id="mean-and-std_dev-calculations-for-each-band">Mean and Std_dev calculations for each band</h3>
+<p>The .ipynb expects mean and std_dev statistics for each band. I do not have a good understanding of what these statistics are and what purpose they serve in the .ipynb. It seems safe to assume they are for data normalization. The values being used are from a median image made from the year 2024. It is assumed that these values are not significantly different than if statistics were calculated on all 24 (8 spectral x 3 temporal) bands reduced across the temporal dimension into 8 statistics. The calculate_chip_statistics.py script could be updated to do this calculation. It is expected that the values would be very similar to the “legacy” values currently in the .ipynb.</p>
+</section>
+<section id="unseen-training-image" class="level3">
+<h3 class="anchored" data-anchor-id="unseen-training-image">Unseen Training Image</h3>
+<p>The aforementioned GEE script used to generate 3-time-step seasonal images was used with images for the year 2020. This is entirely unseen by the model (which was generated from a median taken 2023-2025).</p>
+<p>The image is saved to google drive from the script, and the filepath is used in the .ipynb to download the image into the colab runtime.</p>
+<p>The model is run on the image to produce a seagrass classification image.</p>
+</section>
+</section>
+<section id="results-improvements-to-the-model" class="level1">
+<h1>Results &amp; Improvements to the Model</h1>
+<section id="v01" class="level2">
+<h2 class="anchored" data-anchor-id="v01">v01</h2>
+<p>Initial results from the classifier are poor quality.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v01.png" class="img-fluid figure-img"></p>
+<figcaption>v01 map</figcaption>
+</figure>
+</div>
+<p>The classifier seems to be identifying water and non-water.</p>
+</section>
+<section id="v02-added-land-masking" class="level2">
+<h2 class="anchored" data-anchor-id="v02-added-land-masking">v02 : Added Land-Masking</h2>
+<p>To address this issue the input .tif images are cropped with a land-mask before use. This is applied to both the chip and the to-classify image.</p>
+<p>The <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fprithvi%3Aprithvi_planet_median_creation">GEE image export script</a> has been updated.</p>
+<p>Running again after masking shows markedly improved results.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v02.png" class="img-fluid figure-img"></p>
+<figcaption>v02 map</figcaption>
+</figure>
+</div>
+<p>The model has now learned to identify shallow areas, but is not differentiating between sand and seagrass. As a side note: Prithvi might be good at creating bathymetry.</p>
+</section>
+</section>
+<section id="v03-addition-of-sand-and-water-classes" class="level1">
+<h1>v03 : Addition of Sand and Water Classes</h1>
+<p>Current SIMM map is seagrass/non-seagrass only, but layers exist to highlight <em>some</em> areas of sand and deep water. For tuning the foundation model it is okay that not all sand&amp;&amp;water is identified. The sand and water polygons were added to the final seagrass image to create a new product, the SIMM-classes-product. <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fimars-simm%3Aexport_combined_classification_product_for_prithvi">This GEE script was created for this task</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="simm-classes-product.png" class="img-fluid figure-img"></p>
+<figcaption>simm-classes-product</figcaption>
+</figure>
+</div>
+<p>Note that this image shows actual cover of seagrass and example locations of water and sand; all sand&amp;&amp;water is not marked. For this application completeness matters far less than correctness.</p>
+<p>This four-class image is now used as the _mask product for tuning the classifier.</p>
+<p>The resulting image is terrible.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v03.png" class="img-fluid figure-img"></p>
+<figcaption>seagrass-classification-v03</figcaption>
+</figure>
+</div>
+<p>Two potential explainations for the poor quality of this result are:</p>
+<ol type="1">
+<li>The multi-class boundary was much harder for the model to learn than seagrass/non-seagrass</li>
+<li>The areas marked sand/water were not good representative samples of pure sand/water.</li>
+</ol>
+</section>
+<section id="v04-addition-of-land-class" class="level1">
+<h1>v04 : Addition of land class</h1>
+<p>A second attempt was made to use multi-class classification. This time an additional class is introduced ‘4’ for ‘land’.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="prithvi-v04-classes.png" class="img-fluid figure-img"></p>
+<figcaption>prithvi-v04-classes</figcaption>
+</figure>
+</div>
+<p>The before linked <a href="https://code.earthengine.google.com/bf0ed24a840bbf7af9708906704168a6">imars-simm:export_combined_classification_product_for_prithvi script</a> has been updated.</p>
+<p>Tuning patches have been re-extracted using this new file and the masked 8b x 3-time-step means product. The new chips were compressed and uploaded to gdrive. Statistics were not re-calculated; the mean image has not changed since last calculation.</p>
+<p>The tuning and classification script was run again.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v04.png" class="img-fluid figure-img"></p>
+<figcaption>seagrass-classification-v04</figcaption>
+</figure>
+</div>
+<p>The result is again confusingly poor.</p>
+<section id="v05-switch-to-using-sentinel-imagery" class="level2">
+<h2 class="anchored" data-anchor-id="v05-switch-to-using-sentinel-imagery">v05 : Switch to using Sentinel Imagery</h2>
+<p>Perhaps it is the usage of Planet SuperDove imagery that is causing issues. We attempt to use sentinel imagery only to create a map.</p>
+<p>Because sentinel 2 has more images we reduce to using 2024 only.</p>
+<pre><code>High Attenuation (Jan-Apr) - Image count:
+23
+Transitional (May-early Jul) - Image count:
+15
+Peak Visibility (Late Jul-Oct) - Image count:
+22</code></pre>
+<p>The number of valid patches drops significantly due to the lower resolution of the S2 product:</p>
+<pre><code>(base) tylar@tylar-laptop:~/repos/nasa-prithvi-wetlands$ python py/extract_tuning_patches.py 
+Detected single TIF file: data/seasonal_s2_stack.tif
+
+============================================================
+Processing spectral file 1/1: seasonal_s2_stack.tif
+============================================================
+CRS mismatch detected: EPSG:4326 vs EPSG:3746
+Reprojecting mask to match spectral image...
+Mask reprojected to match spectral image: (1306, 1585)
+
+Extracting 224x224 patches with stride 224
+Number of spectral bands: 24
+Will extract up to 35 patches from this shard
+
+Shard complete: 22 valid patches extracted
+
+============================================================
+Extraction complete!
+============================================================
+Spectral files processed: 1
+Valid patches saved: 22
+Patches skipped: 13
+Output directory: data/tuning_patches
+
+Organizing patches into training and validation sets...
+
+Dataset split created:
+Training samples: 18
+  - Files in: data/tuning_patches/training_chips
+  - List file: training_data.txt
+Validation samples: 4
+  - Files in: data/tuning_patches/validation_chips
+  - List file: validation_data.txt
+
+Chip naming format:
+  - Spectral: chip_XXXXX_merged.tif
+  - Mask: chip_XXXXX.mask.tif
+
+Cleaning up temporary directories...
+  - Removed: data/tuning_patches/spectral
+  - Removed: data/tuning_patches/masks
+✓ Cleanup complete!
+
+✓ Patch extraction complete! Ready for Prithvi fine-tuning.</code></pre>
+<hr>
+<p>!!! PROBLEM DISCOVERED IN PIPELINE !!!</p>
+<p>This issue may affect previous versions. The tuning_patches directory is not cleared with each run. Chips existing in the directory before the script is run will be included in the compressed chip file.</p>
+<p>This may have affected previous multi-class extractions. I am not certain if I manually cleared the tuning_patches directory. The extract_tuning_patches.py script has been updated to clear the directory. ——————</p>
+<p>The patches are zipped and uploaded to GDrive.</p>
+<p>The notebook is re-run.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v05.png" class="img-fluid figure-img"></p>
+<figcaption>seagrass-classification-v05</figcaption>
+</figure>
+</div>
+<p>No good.</p>
+</section>
+<section id="todo-s2-with-2-class" class="level2">
+<h2 class="anchored" data-anchor-id="todo-s2-with-2-class">TODO: s2 with 2-class</h2>
+<p>Rolling back to 2-classes and s2 data.</p>
+</section>
+<section id="todo-band-selection" class="level2">
+<h2 class="anchored" data-anchor-id="todo-band-selection">TODO: Band Selection</h2>
+<p>Addition of ratio bands and bands with temporal components may be useful for the model. The following are considered for addition:</p>
+<ol type="1">
+<li>Ratio Medians For Cleaner Signals</li>
+<li>Turbidity Proxy Blue/Green Median &amp; Variance</li>
+<li>coastal/green</li>
+<li>green I / green II</li>
+<li>log(Blue / Green)</li>
+<li>Variances for Temporal Stability Discrimination</li>
+<li>Green</li>
+<li>Blue/Green</li>
+<li>Max-min for Temporal Change Magnitude Discrimination</li>
+<li>Green</li>
+</ol>
+<p>In addition, the NIR and RedEdge could be dropped, as these are likely not useful for underwater cover. Although the NIR may be useful for differentiating water vs land.</p>
+<p>These modifications should be made to the GEE exporting script so that the new selection of bands will be exported rather than the 8 medians. Because there are 3 time-steps included, the total number of bands will be the number of per-aggregation bands times 3.</p>
+</section>
+<section id="todo-attempt-without-landmask-on-median" class="level2">
+<h2 class="anchored" data-anchor-id="todo-attempt-without-landmask-on-median">TODO: attempt without landmask on median</h2>
+<p>Perhaps the land-masked median image is causing issues. We attempt to run the classifier with a full image.</p>
+</section>
+<section id="todo-per-chip-normalization" class="level2">
+<h2 class="anchored" data-anchor-id="todo-per-chip-normalization">TODO: Per-Chip Normalization</h2>
+<p>To remove the ability of the model to learn on brightness alone, the chips can be normalized independently. Because the overall scene brightness characteristics are removed, the model is forced to focus on texture and shape.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/7yl4r\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -2,35 +2,37 @@
   {
     "listing": "/blog.html",
     "items": [
-      "/posts/gee-rbnerr-wv-image-choosing/index.html",
-      "/posts/imars-rsclass-2023/index.html",
-      "/posts/prithvi-seagrass/index.html",
-      "/posts/laptop-hdd-repartition/index.html",
-      "/posts/phytoclass-gui-updates/index.html",
-      "/posts/calcofi-clone/index.html",
-      "/posts/rainbow-river-2024-01/index.html",
-      "/posts/researcher-workshops-brainstorming/index.html",
-      "/posts/bbbb-electrical-victron-connection/index.html",
-      "/posts/gee-multih-usvi/index.html",
-      "/posts/quarto-blog-config/index.html",
-      "/posts/quarto-blog-init/index.html"
+      "/posts/2025-12_prithvi-mangrove/index.html",
+      "/posts/2025-12_prithvi-seagrass/index.html",
+      "/posts/2024-02_laptop-hdd-repartition/index.html",
+      "/posts/2024-01_gee-rbnerr-wv-image-choosing/index.html",
+      "/posts/2024-01_calcofi-clone/index.html",
+      "/posts/2024-01_phytoclass-gui-updates/index.html",
+      "/posts/2024-01_rainbow-river-2024-01/index.html",
+      "/posts/2024-01_researcher-workshops-brainstorming/index.html",
+      "/posts/2024-01_bbbb-electrical-victron-connection/index.html",
+      "/posts/2023-12_gee-multih-usvi/index.html",
+      "/posts/2023-12_quarto-blog-config/index.html",
+      "/posts/2023-12_quarto-blog-init/index.html",
+      "/posts/2023-12_imars-rsclass-2023/index.html"
     ]
   },
   {
     "listing": "/index.html",
     "items": [
-      "/posts/gee-rbnerr-wv-image-choosing/index.html",
-      "/posts/imars-rsclass-2023/index.html",
-      "/posts/prithvi-seagrass/index.html",
-      "/posts/laptop-hdd-repartition/index.html",
-      "/posts/phytoclass-gui-updates/index.html",
-      "/posts/calcofi-clone/index.html",
-      "/posts/rainbow-river-2024-01/index.html",
-      "/posts/researcher-workshops-brainstorming/index.html",
-      "/posts/bbbb-electrical-victron-connection/index.html",
-      "/posts/gee-multih-usvi/index.html",
-      "/posts/quarto-blog-config/index.html",
-      "/posts/quarto-blog-init/index.html"
+      "/posts/2025-12_prithvi-mangrove/index.html",
+      "/posts/2025-12_prithvi-seagrass/index.html",
+      "/posts/2024-02_laptop-hdd-repartition/index.html",
+      "/posts/2024-01_gee-rbnerr-wv-image-choosing/index.html",
+      "/posts/2024-01_calcofi-clone/index.html",
+      "/posts/2024-01_phytoclass-gui-updates/index.html",
+      "/posts/2024-01_rainbow-river-2024-01/index.html",
+      "/posts/2024-01_researcher-workshops-brainstorming/index.html",
+      "/posts/2024-01_bbbb-electrical-victron-connection/index.html",
+      "/posts/2023-12_gee-multih-usvi/index.html",
+      "/posts/2023-12_quarto-blog-config/index.html",
+      "/posts/2023-12_quarto-blog-init/index.html",
+      "/posts/2023-12_imars-rsclass-2023/index.html"
     ]
   }
 ]
