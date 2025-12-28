@@ -147,6 +147,6 @@ The final notebook was lost due to a computer crash, but an early iteration is [
 
 The classification is reasonable but lowered resolution when compared to the input product.
 
-[classification-v01](classification-v01.png)
+![classification-v01](classification-v01.png)
 
-[classification-giri](classification-giri.png)
+![classification-giri](classification-giri.png)
