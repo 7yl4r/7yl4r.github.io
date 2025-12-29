@@ -9,13 +9,6 @@ An attempt to fine-tune Prithvi-EO using IMaRS SIMM project seagrass maps.
 This work is based on [this  Prithvi-EO notebook](https://github.com/Prithvi-EO/notebooks/prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb).
 
 
-## Caveats
-
-The IMaRS SIMM project uses Planet imagery, so the spectra do not align perfectly with Prithvi's knowledge (based on Sentinel & Landsat).
-ChatGPT says Prithvi's knowledge is sensor-agnostic.
-I have chosen to trust this statement.
-
-
 ## Background
 ### The SIMM Seagrass Project
 
@@ -45,6 +38,8 @@ In addition to application of the seagrass classifier (GEE script available [her
 
 
 ## Create Training Dataset
+The first training dataset created used Planet imagery, so the spectra do not align perfectly with Prithvi's knowledge (based on Sentinel & Landsat).
+Later versions focused only on sentinel imagery.
 
 The notebook expects input data for fine-tuning in the `../data/` directory.
 These files should be in pairs like:
@@ -119,14 +114,14 @@ The patches were then compressed (`tar -cvjf data/seagrass_tuning_patches.tar.bz
 
 ## Fine-tuning and using the model
 
-A jupyter notebook [prithvi_*seagrass.ipynb](https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/prithvi_v2_eo_300_tl_unet_seagrass.ipynb) was created from the prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb starting point. 
+A jupyter notebook `prithvi_v2_eo_300_tl_unet_seagrass.ipynb` was created from the prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb starting point. 
 Modifications were made to :
 
 1. load the training dataset
 2. create relevant classes derived from Crop classification classes
   * add required means and std_dev for each band. (see below)
     * it is assumed these are calculated from patch chips.
-    * a script to do this calculation was created: [calculate_chip_statistics.py](https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/py/calculate_chip_statistics.py)
+    * a script to do this calculation was created: [calculate_chip_statistics.py](https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/scripts/calculate_chip_statistics.py)
 3. apply model to an unseen image to create classification
 
 
@@ -307,9 +302,109 @@ The notebook is re-run.
 
 No good.
 
-## TODO: s2 with 2-class
+----------------------------------------------------------------------------------------------
 
-Rolling back to 2-classes and s2 data.
+
+## Simplify to 2-class and Sentinel-2 only imagery
+
+The pipeline was simplified to identify root cause of poor model performance.
+A [new research notebook](https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/notebooks/prithvi_v2_eo_300_tl_unet_seagrass_2class.ipynb) was created.
+
+The number of seagrass classes is returned to 2 (seagrass, other).
+The input imagery being used will be derived from sentinel 2 (rather than planet superdove).
+
+### New Spectral Images
+
+New spectral images are prepared with GEE `users/tylarmurray/prithvi:prithvi_s2_median_tif_collection`[1](https://code.earthengine.google.com/c90a29c681dfb1c28704f94f58fd8078).
+
+for 2020: 
+
+```
+High Attenuation (Jan-Apr) - Image count:
+72
+Transitional (May-early Jul) - Image count:
+44
+Peak Visibility (Late Jul-Oct) - Image count:
+67
+```
+
+and for 2024:
+
+```
+High Attenuation (Jan-Apr) - Image count:
+74
+Transitional (May-early Jul) - Image count:
+49
+Peak Visibility (Late Jul-Oct) - Image count:
+72
+```
+
+### New Tuning Patch-Set
+New tuning patches were extracted from the 2023-2025 median image and the SIMM seagrass map.
+
+```
+(base) tylar@tylar-laptop:~/repos/nasa-prithvi-wetlands$ python scripts/extract_tuning_patches_seagrass_2class_sentinel2.py 
+Clearing existing output directory: data/output/tuning_patches
+Detected single TIF file: data/input/spectral/stAndrews_seasonal_s2_stack_2023_to_2025.tif
+
+============================================================
+Processing spectral file 1/1: stAndrews_seasonal_s2_stack_2023_to_2025.tif
+============================================================
+CRS mismatch detected: EPSG:4326 vs EPSG:3746
+Reprojecting mask to match spectral image...
+Mask reprojected to match spectral image: (1306, 1585)
+
+Extracting 224x224 patches with stride 224
+Number of spectral bands: 24
+Will extract up to 35 patches from this shard
+
+Shard complete: 22 valid patches extracted
+
+============================================================
+Extraction complete!
+============================================================
+Spectral files processed: 1
+Valid patches saved: 22
+Patches skipped: 13
+Output directory: data/output/tuning_patches
+
+Organizing patches into training and validation sets...
+
+Dataset split created:
+Training samples: 18
+  - Files in: data/output/tuning_patches/training_chips
+  - List file: training_data.txt
+Validation samples: 4
+  - Files in: data/output/tuning_patches/validation_chips
+  - List file: validation_data.txt
+
+Chip naming format:
+  - Spectral: chip_XXXXX_merged.tif
+  - Mask: chip_XXXXX.mask.tif
+
+Cleaning up temporary directories...
+  - Removed: data/output/tuning_patches/spectral
+  - Removed: data/output/tuning_patches/masks
+✓ Cleanup complete!
+
+✓ Patch extraction complete! Ready for Prithvi fine-tuning.
+
+Compressing tuning patches...
+✓ Compressed patches saved to: data/output/stAndrews_seagrass_tuning_patches.tar.bz2
+```
+
+**NOTE**: This number of tuning samples may be too low for tuning to be effective.
+
+
+### Results
+![seagrass-classification-v06](seagrass-classification-v06.png)
+
+The result shows artifacts at the boundaries of processing tiling.
+The model is identifying areas nearby to masked areas as likely seagrass.
+
+A comparison with an un-land-masked image is needed.
+
+For this comparison see [this post](../2025-12_prithvi-landmask-or-not/index.qmd)
 
 
 ## TODO: Band Selection
