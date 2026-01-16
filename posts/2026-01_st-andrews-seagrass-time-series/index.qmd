@@ -1,0 +1,21 @@
+---
+title: "Seagrass Time Series for St Andrew's Bay, FL"
+author: "Tylar"
+date: "2026-01-16"
+---
+
+An attempt was made to visualize seagrass change in select regions of St Andrew's Bay using Sentinel 2 imagery.
+
+![st-andrews-seagrass-time-series](st-andrews-seagrass-time-series.png)
+
+*The imact of Hurricane Michael seems apparent, but then the question is: what happened in 2021?*
+
+-------------
+
+Two areas of seagrass loss between 2020 and 2024 were manually identified using the IMaRS SIMM project seagrass .tif files.
+
+Sentinel images were cloudmasked and the mean was taken from within these areas using [this GEE script](https://code.earthengine.google.com/8ef3cc2a42858a2ff19563288d4f313d).
+
+The resulting values were downloaded as a .csv and imported into [this gsheet](https://docs.google.com/spreadsheets/d/1s2DFIbGCChC2puwLrBrPqXgujDPrJ_vGxG375ZpRY5M/edit?usp=sharing).
+
+The visualizations there were screenshotted into Inkscape and manually annotated.
