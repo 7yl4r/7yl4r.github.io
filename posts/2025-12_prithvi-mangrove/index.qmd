@@ -66,7 +66,8 @@ The file was uploaded to GDrive for access from colab notebooks.
 # Methods
 
 ## Preparation of Fine-Tuning Patch Chips
-The input files were downloaded and a script was used to cut these images into into sets of chips:
+The input files were downloaded and a script was used to cut these images into into sets of chips.
+The required script(s) can be found in [the 7yl4r/prithvi-hab repo](https://github.com/7yl4r/prithvi-hab).
 
 ```
 (base) tylar@tylar-laptop:~/repos/nasa-prithvi-wetlands$ python scripts/extract_tuning_patches_mangrove_sentinel2.py 
