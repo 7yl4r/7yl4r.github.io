@@ -1,7 +1,7 @@
 ---
 title: "Should Land Masking Be Applied for GeoFM Tuning Datasets?"
 author: "Tylar"
-date: "2025-12-28
+date: "2025-12-28"
 ---
 
 Results of Seagrass Classification with Prithvi-EO using land-masked spectral files and non-land-masked spectral files.
