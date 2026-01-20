@@ -196,7 +196,7 @@ Peak Visibility (Late Jul-Oct) - Image count:
 <h1>Methods</h1>
 <section id="preparation-of-fine-tuning-patch-chips" class="level2">
 <h2 class="anchored" data-anchor-id="preparation-of-fine-tuning-patch-chips">Preparation of Fine-Tuning Patch Chips</h2>
-<p>The input files were downloaded and a script was used to cut these images into into sets of chips:</p>
+<p>The input files were downloaded and a script was used to cut these images into into sets of chips. The required script(s) can be found in <a href="https://github.com/7yl4r/prithvi-hab">the 7yl4r/prithvi-hab repo</a>.</p>
 <pre><code>(base) tylar@tylar-laptop:~/repos/nasa-prithvi-wetlands$ python scripts/extract_tuning_patches_mangrove_sentinel2.py 
 Clearing existing output directory: data/output/tuning_patches
 Detected single TIF file: data/input/spectral/TTI_seasonal_s2_stack.tif
@@ -378,7 +378,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/7yl4r\.github\.io\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
