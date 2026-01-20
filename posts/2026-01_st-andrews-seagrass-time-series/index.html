@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tylar">
-<meta name="dcterms.date" content="2025-12-28">
+<meta name="dcterms.date" content="2026-01-16">
 
-<title>Should Land Masking Be Applied for GeoFM Tuning Datasets? – tylar.info</title>
+<title>Seagrass Time Series for St Andrew’s Bay, FL – tylar.info</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Should Land Masking Be Applied for GeoFM Tuning Datasets?</h1>
+      <h1 class="title">Seagrass Time Series for St Andrew’s Bay, FL</h1>
                       </div>
   </div>
     
@@ -131,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 28, 2025</p>
+        <p class="date">January 16, 2026</p>
       </div>
     </div>
     
@@ -150,87 +150,21 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>Results of Seagrass Classification with Prithvi-EO using land-masked spectral files and non-land-masked spectral files.</p>
-<section id="spectral-images" class="level2">
-<h2 class="anchored" data-anchor-id="spectral-images">Spectral Images</h2>
-<p>Spectral images are prepared with GEE <code>users/tylarmurray/prithvi:prithvi_s2_median_tif_collection</code><a href="https://code.earthengine.google.com/c90a29c681dfb1c28704f94f58fd8078">1</a>.</p>
-<p>Line 20 (see below) was removed to create the “unmasked” product.</p>
-<pre><code>   .map(function(img){return img.clip(roi.bb);})</code></pre>
-<p>The resulting multi-season median composites were built from the following set of images.</p>
-<p>for 2020:</p>
-<pre><code>High Attenuation (Jan-Apr) - Image count:
-72
-Transitional (May-early Jul) - Image count:
-44
-Peak Visibility (Late Jul-Oct) - Image count:
-67</code></pre>
-<p>and for 2024:</p>
-<pre><code>High Attenuation (Jan-Apr) - Image count:
-74
-Transitional (May-early Jul) - Image count:
-49
-Peak Visibility (Late Jul-Oct) - Image count:
-72</code></pre>
-</section>
-<section id="tuning-patch-sets" class="level2">
-<h2 class="anchored" data-anchor-id="tuning-patch-sets">Tuning Patch-Sets</h2>
-<p>Tuning patches were extracted from each 2023-2025 median image and the SIMM seagrass map.</p>
-<pre><code>(base) tylar@tylar-laptop:~/repos/nasa-prithvi-wetlands$ python scripts/extract_tuning_patches_seagrass_2class_sentinel2.py 
-Clearing existing output directory: data/output/tuning_patches
-
-============================================================
-CRS mismatch detected: EPSG:4326 vs EPSG:3746
-Reprojecting mask to match spectral image...
-Mask reprojected to match spectral image: (1306, 1585)
-
-Extracting 224x224 patches with stride 224
-Number of spectral bands: 24
-Will extract up to 35 patches from this shard
-
-Shard complete: 22 valid patches extracted
-
-============================================================
-Extraction complete!
-============================================================
-Spectral files processed: 1
-Valid patches saved: 22
-Patches skipped: 13
-Output directory: data/output/tuning_patches
-
-Organizing patches into training and validation sets...
-
-Dataset split created:
-Training samples: 18
-  - Files in: data/output/tuning_patches/training_chips
-  - List file: training_data.txt
-Validation samples: 4
-  - Files in: data/output/tuning_patches/validation_chips
-  - List file: validation_data.txt
-
-Chip naming format:
-  - Spectral: chip_XXXXX_merged.tif
-  - Mask: chip_XXXXX.mask.tif
-
-Cleaning up temporary directories...
-  - Removed: data/output/tuning_patches/spectral
-  - Removed: data/output/tuning_patches/masks
-✓ Cleanup complete!
-
-✓ Patch extraction complete! Ready for Prithvi fine-tuning.</code></pre>
-<p><strong>NOTE</strong>: This number of tuning samples may be too low for tuning to be effective.</p>
-</section>
-<section id="research-notebook-changes" class="level2">
-<h2 class="anchored" data-anchor-id="research-notebook-changes">Research Notebook Changes</h2>
-<p>The following line is adjusted to use the unmasked or mask product:</p>
-<pre><code>UNSEEN_IMAGE_FNAME = "stAndrews_seasonal_s2_stack_2019_to_2021_unmasked.tif"</code></pre>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>With Landmask: <img src="seagrass-classification-with-landmask.png" class="img-fluid" alt="seagrass-classification-with-landmask"></p>
-<p>Without Landmask: <img src="seagrass-classification-without-landmask.png" class="img-fluid" alt="seagrass-classification-without-landmask"></p>
+<p>An attempt was made to visualize seagrass change in select regions of St Andrew’s Bay using Sentinel 2 imagery.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="st-andrews-seagrass-time-series.png" class="img-fluid figure-img"></p>
+<figcaption>st-andrews-seagrass-time-series</figcaption>
+</figure>
+</div>
+<p><em>The imact of Hurricane Michael seems apparent, but then the question is: what happened in 2021?</em></p>
+<hr>
+<p>Two areas of seagrass loss between 2020 and 2024 were manually identified using the IMaRS SIMM project seagrass .tif files.</p>
+<p>Sentinel images were cloudmasked and the mean was taken from within these areas using <a href="https://code.earthengine.google.com/8ef3cc2a42858a2ff19563288d4f313d">this GEE script</a>.</p>
+<p>The resulting values were downloaded as a .csv and imported into <a href="https://docs.google.com/spreadsheets/d/1s2DFIbGCChC2puwLrBrPqXgujDPrJ_vGxG375ZpRY5M/edit?usp=sharing">this gsheet</a>.</p>
+<p>The visualizations there were screenshotted into Inkscape and manually annotated.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
