@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tylar">
-<meta name="dcterms.date" content="2024-01-25">
+<meta name="dcterms.date" content="2025-12-12">
 
-<title>Choosing Images for Rookery Bay NERR in GEE – tylar.info</title>
+<title>Seagrass Mapping with NASA Prithvi-EO – tylar.info</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -148,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Choosing Images for Rookery Bay NERR in GEE</h1>
+      <h1 class="title">Seagrass Mapping with NASA Prithvi-EO</h1>
                       </div>
   </div>
     
@@ -165,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 25, 2024</p>
+        <p class="date">December 12, 2025</p>
       </div>
     </div>
     
@@ -184,52 +150,316 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Today I am working to select the “best” satellite images for input into a machine learning model. We want full coverage of the RBNERR area but we are also looking for consistency between images.</p>
-<p>A display of how evenly the area is covered is shown below:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>exports<span class="op">.</span><span class="at">displayIC</span> <span class="op">=</span> <span class="kw">function</span>(d){</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> imageCollection <span class="op">=</span> d<span class="op">.</span><span class="at">imageCollection</span><span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> sumImg <span class="op">=</span> imageCollection<span class="op">.</span><span class="fu">count</span>()<span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Map</span><span class="op">.</span><span class="fu">addLayer</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    sumImg</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">min</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">max</span><span class="op">:</span> <span class="dv">51</span>}<span class="op">,</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="bu">Map</span><span class="op">.</span><span class="fu">centerObject</span>(sumImg)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rookery <span class="op">=</span> <span class="pp">require</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"users/tylarmurray/rois:RBNERR"</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>exports<span class="op">.</span><span class="fu">displayIC</span>({</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">imageCollection</span><span class="op">:</span> rookery<span class="op">.</span><span class="at">wv_image_collection</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The <code>centerObject</code> call left things very zoomed out but this works well otherwise. I have reduced the opacity a bit in the following screenshot so the basemap can show through slightly.</p>
+<p>An attempt to fine-tune Prithvi-EO using IMaRS SIMM project seagrass maps.</p>
+<p>This work is based on <a href="https://github.com/Prithvi-EO/notebooks/prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb">this Prithvi-EO notebook</a>.</p>
+<section id="caveats" class="level2">
+<h2 class="anchored" data-anchor-id="caveats">Caveats</h2>
+<p>The IMaRS SIMM project uses Planet imagery, so the spectra do not align perfectly with Prithvi’s knowledge (based on Sentinel &amp; Landsat). ChatGPT says Prithvi’s knowledge is sensor-agnostic. I have chosen to trust this statement.</p>
+</section>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<section id="the-simm-seagrass-project" class="level3">
+<h3 class="anchored" data-anchor-id="the-simm-seagrass-project">The SIMM Seagrass Project</h3>
+<p>From the SIMM Seagrass project two images are obtained of the St Andrew’s sound region.</p>
+<ol type="1">
+<li>A seagrass classification .tif created using the mode of classifications on images taken throughout a year.</li>
+<li>A spectral mean .tif created using the same images used to generate classifications.</li>
+</ol>
+<p>The aggregations use a total of 138 images covering 2022-2024, one aggregation is created for each year.</p>
+<p>The 2024 year is selected for creating this dataset. The 2024 spectral mean image is built from 72 images. This image cannot be shared due to licensing restrictions.</p>
+<p>The seagrass image can be downloaded <a href="https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui">here</a>. From the SIMM Seagrass project two images are obtained of the St Andrew’s sound region.</p>
+<ol type="1">
+<li>A seagrass classification .tif created using the mode of classifications on images taken throughout a year.</li>
+<li>A spectral median .tif created using all Planet SuperDove images (346 images).</li>
+</ol>
+<p>The spectral mean image cannot be shared due to licensing restrictions. The GEE script to generate this image is <a href="https://code.earthengine.google.com/de9e9e1dc344d4cf8c234b30809665b8">here</a>. This script will not work unless you have access to the (restricted) Planet SuperDove image collection asset.</p>
+<p>The seagrass image for 2024 can be downloaded <a href="https://usf.box.com/s/xr4zqg7vj9ynqxfn9zz0oj3r91ki66ui">here</a>. In addition to application of the seagrass classifier (GEE script available <a href="https://code.earthengine.google.com/23d1c15a67dfbc71564b67afdf394873">here</a>), manal adjustments may have been made to improve the final product.</p>
+</section>
+</section>
+<section id="create-training-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="create-training-dataset">Create Training Dataset</h2>
+<p>The notebook expects input data for fine-tuning in the <code>../data/</code> directory. These files should be in pairs like:</p>
+<ul>
+<li>chip_025_082.mask.tif</li>
+<li>chip_025_082.merged.tif</li>
+</ul>
+<p>The mask is the classification (seagrass yes/no). The merged file is the spectral bands.</p>
+<section id="attempt-1-google-earth-engine" class="level3">
+<h3 class="anchored" data-anchor-id="attempt-1-google-earth-engine">Attempt (1) : Google Earth Engine</h3>
+<p>To create a fine-tuning dataset of patches, the GEE addSeagrass method developed for the SIMM Seagrass project along with the planet superdove imagery already ingested into GEE are used. The spectral images and the seagrass layer produced need to be cut into patches.</p>
+<p>An initial attempt to create this script with ChatGPT (transcript <a href="https://chatgpt.com/share/693c60fa-95e4-800d-905b-e96a00b0eb63">here</a>) failed.</p>
+<p>An attempt to work with Claude to accomplish this (artifact <a href="https://claude.ai/public/artifacts/4c638343-6835-4e91-bdaa-b0c1361f7e7d">here</a>) ended in moderate success. Patches can be exported with one GEE task per patch in batches. This necessitates clicking run on every patch export. For a few 100 patches this is fine, but it is recommended to tune with a minimum of 1000 patches.</p>
+<p>The python API allows automatic starting of tasks, but the generation of the seagrass maps is done in GEE javascript. The .tif outputs of these scripts can be used locally rather than using GEE to chunk up the images into patches.</p>
+</section>
+<section id="attempt-2-cutting-patches-with-python" class="level3">
+<h3 class="anchored" data-anchor-id="attempt-2-cutting-patches-with-python">Attempt (2) : Cutting patches with python</h3>
+<p>The SVM classification as described above should be <code>annual_median_selectedBands_2024.tif</code>.</p>
+<p>The 8b image is expected to have 3 time-steps in the bands. Three multispectral images from three time points are expected, with bands in the _merged.tif files ordered like</p>
+<pre><code>[t0_b0, t0_b1, ..., t0_b7,
+ t1_b0, t1_b1, ..., t1_b7,
+ t2_b0, t2_b1, ..., t2_b7]</code></pre>
+<p>A GEE script to create this image using three composite (median) images from for images from years 2023-2025 was created <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fprithvi%3Aprithvi_planet_median_creation">here</a> The seasons were chosen using <a href="https://chatgpt.com/share/69419963-2858-800d-a6ab-44837f7175d1">this ChatGPT query</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 11%">
+<col style="width: 21%">
+<col style="width: 19%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Season</th>
+<th>Months</th>
+<th>Optical Regime</th>
+<th>Seagrass Detectability</th>
+<th>Recommended Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>High Attenuation</strong></td>
+<td>Jan–Apr</td>
+<td>High CDOM + sediment</td>
+<td>Poor</td>
+<td>Avoid for benthic mapping</td>
+</tr>
+<tr class="even">
+<td><strong>Transitional</strong></td>
+<td>May–early Jul</td>
+<td>Mixed clarity</td>
+<td>Moderate, variable</td>
+<td>Supplemental / temporal fusion</td>
+</tr>
+<tr class="odd">
+<td><strong>Peak Visibility</strong></td>
+<td>Late Jul–Oct</td>
+<td>Clear water, deep light</td>
+<td>Excellent</td>
+<td>Primary training &amp; mapping</td>
+</tr>
+<tr class="even">
+<td><em>(Excluded / Variable)</em></td>
+<td>Nov–Dec</td>
+<td>Storm-driven variability</td>
+<td>Unreliable</td>
+<td>Use selectively</td>
+</tr>
+</tbody>
+</table>
+<p>The Nov-Dec period was excluded. The total images used for each seasonal composite are:</p>
+<ul>
+<li>High Attenuation (Jan-Apr) - Image count: 46</li>
+<li>Transitional (May-early Jul) - Image count: 10</li>
+<li>Peak Visibility (Late Jul-Oct) - Image count: 92</li>
+</ul>
+<p>Based on visual interpretation of the true-color display, the seagrass areas appear to have different spectral signatures in the seagrass regions for each season. This added temporal information should increase the accuracy of the foundation model’s classification product.</p>
+<p>The resulting images do have some artifacts; the lines between passes are noticeable.</p>
+<p>The resulting export is saved as 9 <em>shards</em> because a single .tif would be too large. The download from gdrive comes in multiple parts because a single .zip would be too large. After unzipping each .zip, the files are put into a single directory and used with the extract_tuning_patches.py script.</p>
+<p>Preparation of tuning patches was completed with <a href="https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/py/extract_tuning_patches.py">this script</a>.</p>
+<p>The patches were then compressed (<code>tar -cvjf data/seagrass_tuning_patches.tar.bz2 data/tuning_patches</code>) and the compressed file was uploaded to Google Drive.</p>
+</section>
+</section>
+<section id="fine-tuning-and-using-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="fine-tuning-and-using-the-model">Fine-tuning and using the model</h2>
+<p>A jupyter notebook <a href="https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/prithvi_v2_eo_300_tl_unet_seagrass.ipynb">prithvi_*seagrass.ipynb</a> was created from the prithvi_v2_eo_300_tl_unet_multitemporal_crop.ipynb starting point. Modifications were made to :</p>
+<ol type="1">
+<li>load the training dataset</li>
+<li>create relevant classes derived from Crop classification classes</li>
+</ol>
+<ul>
+<li>add required means and std_dev for each band. (see below)
+<ul>
+<li>it is assumed these are calculated from patch chips.</li>
+<li>a script to do this calculation was created: <a href="https://github.com/7yl4r/nasa-prithvi-wetlands/blob/main/py/calculate_chip_statistics.py">calculate_chip_statistics.py</a></li>
+</ul></li>
+</ul>
+<ol start="3" type="1">
+<li>apply model to an unseen image to create classification</li>
+</ol>
+<section id="mean-and-std_dev-calculations-for-each-band" class="level3">
+<h3 class="anchored" data-anchor-id="mean-and-std_dev-calculations-for-each-band">Mean and Std_dev calculations for each band</h3>
+<p>The .ipynb expects mean and std_dev statistics for each band. I do not have a good understanding of what these statistics are and what purpose they serve in the .ipynb. It seems safe to assume they are for data normalization. The values being used are from a median image made from the year 2024. It is assumed that these values are not significantly different than if statistics were calculated on all 24 (8 spectral x 3 temporal) bands reduced across the temporal dimension into 8 statistics. The calculate_chip_statistics.py script could be updated to do this calculation. It is expected that the values would be very similar to the “legacy” values currently in the .ipynb.</p>
+</section>
+<section id="unseen-training-image" class="level3">
+<h3 class="anchored" data-anchor-id="unseen-training-image">Unseen Training Image</h3>
+<p>The aforementioned GEE script used to generate 3-time-step seasonal images was used with images for the year 2020. This is entirely unseen by the model (which was generated from a median taken 2023-2025).</p>
+<p>The image is saved to google drive from the script, and the filepath is used in the .ipynb to download the image into the colab runtime.</p>
+<p>The model is run on the image to produce a seagrass classification image.</p>
+</section>
+</section>
+<section id="results-improvements-to-the-model" class="level1">
+<h1>Results &amp; Improvements to the Model</h1>
+<section id="v01" class="level2">
+<h2 class="anchored" data-anchor-id="v01">v01</h2>
+<p>Initial results from the classifier are poor quality.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./coverMap.png" class="img-fluid figure-img"></p>
-<figcaption>covermap</figcaption>
+<p><img src="seagrass-classification-v01.png" class="img-fluid figure-img"></p>
+<figcaption>v01 map</figcaption>
 </figure>
 </div>
-<p>I am struggling to choose a method for identifying the best subset of images. It was suggested to limit by season but it is unclear to me how to choose which season is best.</p>
-<p>I ran the code again but on an image collection that has been cloudmasked. I added this little function to the <code>users/tylarmurray/rois/RBNERR</code> namespace:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// return a clean &amp; normalized WV imageCollection.</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>exports<span class="op">.</span><span class="at">getCleanWVImageCollection</span> <span class="op">=</span> <span class="kw">function</span>(){</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> wv_fns <span class="op">=</span> <span class="pp">require</span>(<span class="st">'users/tylarmurray/sat_fns:wv_fns'</span>)<span class="op">;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> exports<span class="op">.</span><span class="at">wv_image_collection</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>(wv_fns<span class="op">.</span><span class="at">convertToRatios</span>)  <span class="co">// normalization</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>(wv_fns<span class="op">.</span><span class="at">cloudMaskImage</span>)  <span class="co">// cloudmask</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The new image shows much more detail than it should:</p>
+<p>The classifier seems to be identifying water and non-water.</p>
+</section>
+<section id="v02-added-land-masking" class="level2">
+<h2 class="anchored" data-anchor-id="v02-added-land-masking">v02 : Added Land-Masking</h2>
+<p>To address this issue the input .tif images are cropped with a land-mask before use. This is applied to both the chip and the to-classify image.</p>
+<p>The <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fprithvi%3Aprithvi_planet_median_creation">GEE image export script</a> has been updated.</p>
+<p>Running again after masking shows markedly improved results.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./covermap_cloudmasked.png" class="img-fluid figure-img"></p>
-<figcaption>covermap w/ cloudmask</figcaption>
+<p><img src="seagrass-classification-v02.png" class="img-fluid figure-img"></p>
+<figcaption>v02 map</figcaption>
 </figure>
 </div>
-<p>This means that the cloudmask function is false-positive masking non-clouds often enough for the details to show up here. The amount of detail leaking through is concerning.</p>
+<p>The model has now learned to identify shallow areas, but is not differentiating between sand and seagrass. As a side note: Prithvi might be good at creating bathymetry.</p>
+</section>
+</section>
+<section id="v03-addition-of-sand-and-water-classes" class="level1">
+<h1>v03 : Addition of Sand and Water Classes</h1>
+<p>Current SIMM map is seagrass/non-seagrass only, but layers exist to highlight <em>some</em> areas of sand and deep water. For tuning the foundation model it is okay that not all sand&amp;&amp;water is identified. The sand and water polygons were added to the final seagrass image to create a new product, the SIMM-classes-product. <a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fimars-simm%3Aexport_combined_classification_product_for_prithvi">This GEE script was created for this task</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="simm-classes-product.png" class="img-fluid figure-img"></p>
+<figcaption>simm-classes-product</figcaption>
+</figure>
+</div>
+<p>Note that this image shows actual cover of seagrass and example locations of water and sand; all sand&amp;&amp;water is not marked. For this application completeness matters far less than correctness.</p>
+<p>This four-class image is now used as the _mask product for tuning the classifier.</p>
+<p>The resulting image is terrible.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v03.png" class="img-fluid figure-img"></p>
+<figcaption>seagrass-classification-v03</figcaption>
+</figure>
+</div>
+<p>Two potential explainations for the poor quality of this result are:</p>
+<ol type="1">
+<li>The multi-class boundary was much harder for the model to learn than seagrass/non-seagrass</li>
+<li>The areas marked sand/water were not good representative samples of pure sand/water.</li>
+</ol>
+</section>
+<section id="v04-addition-of-land-class" class="level1">
+<h1>v04 : Addition of land class</h1>
+<p>A second attempt was made to use multi-class classification. This time an additional class is introduced ‘4’ for ‘land’.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="prithvi-v04-classes.png" class="img-fluid figure-img"></p>
+<figcaption>prithvi-v04-classes</figcaption>
+</figure>
+</div>
+<p>The before linked <a href="https://code.earthengine.google.com/bf0ed24a840bbf7af9708906704168a6">imars-simm:export_combined_classification_product_for_prithvi script</a> has been updated.</p>
+<p>Tuning patches have been re-extracted using this new file and the masked 8b x 3-time-step means product. The new chips were compressed and uploaded to gdrive. Statistics were not re-calculated; the mean image has not changed since last calculation.</p>
+<p>The tuning and classification script was run again.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v04.png" class="img-fluid figure-img"></p>
+<figcaption>seagrass-classification-v04</figcaption>
+</figure>
+</div>
+<p>The result is again confusingly poor.</p>
+<section id="v05-switch-to-using-sentinel-imagery" class="level2">
+<h2 class="anchored" data-anchor-id="v05-switch-to-using-sentinel-imagery">v05 : Switch to using Sentinel Imagery</h2>
+<p>Perhaps it is the usage of Planet SuperDove imagery that is causing issues. We attempt to use sentinel imagery only to create a map.</p>
+<p>Because sentinel 2 has more images we reduce to using 2024 only.</p>
+<pre><code>High Attenuation (Jan-Apr) - Image count:
+23
+Transitional (May-early Jul) - Image count:
+15
+Peak Visibility (Late Jul-Oct) - Image count:
+22</code></pre>
+<p>The number of valid patches drops significantly due to the lower resolution of the S2 product:</p>
+<pre><code>(base) tylar@tylar-laptop:~/repos/nasa-prithvi-wetlands$ python py/extract_tuning_patches.py 
+Detected single TIF file: data/seasonal_s2_stack.tif
+
+============================================================
+Processing spectral file 1/1: seasonal_s2_stack.tif
+============================================================
+CRS mismatch detected: EPSG:4326 vs EPSG:3746
+Reprojecting mask to match spectral image...
+Mask reprojected to match spectral image: (1306, 1585)
+
+Extracting 224x224 patches with stride 224
+Number of spectral bands: 24
+Will extract up to 35 patches from this shard
+
+Shard complete: 22 valid patches extracted
+
+============================================================
+Extraction complete!
+============================================================
+Spectral files processed: 1
+Valid patches saved: 22
+Patches skipped: 13
+Output directory: data/tuning_patches
+
+Organizing patches into training and validation sets...
+
+Dataset split created:
+Training samples: 18
+  - Files in: data/tuning_patches/training_chips
+  - List file: training_data.txt
+Validation samples: 4
+  - Files in: data/tuning_patches/validation_chips
+  - List file: validation_data.txt
+
+Chip naming format:
+  - Spectral: chip_XXXXX_merged.tif
+  - Mask: chip_XXXXX.mask.tif
+
+Cleaning up temporary directories...
+  - Removed: data/tuning_patches/spectral
+  - Removed: data/tuning_patches/masks
+✓ Cleanup complete!
+
+✓ Patch extraction complete! Ready for Prithvi fine-tuning.</code></pre>
+<hr>
+<p>!!! PROBLEM DISCOVERED IN PIPELINE !!!</p>
+<p>This issue may affect previous versions. The tuning_patches directory is not cleared with each run. Chips existing in the directory before the script is run will be included in the compressed chip file.</p>
+<p>This may have affected previous multi-class extractions. I am not certain if I manually cleared the tuning_patches directory. The extract_tuning_patches.py script has been updated to clear the directory. ——————</p>
+<p>The patches are zipped and uploaded to GDrive.</p>
+<p>The notebook is re-run.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="seagrass-classification-v05.png" class="img-fluid figure-img"></p>
+<figcaption>seagrass-classification-v05</figcaption>
+</figure>
+</div>
+<p>No good.</p>
+</section>
+<section id="todo-s2-with-2-class" class="level2">
+<h2 class="anchored" data-anchor-id="todo-s2-with-2-class">TODO: s2 with 2-class</h2>
+<p>Rolling back to 2-classes and s2 data.</p>
+</section>
+<section id="todo-band-selection" class="level2">
+<h2 class="anchored" data-anchor-id="todo-band-selection">TODO: Band Selection</h2>
+<p>Addition of ratio bands and bands with temporal components may be useful for the model. The following are considered for addition:</p>
+<ol type="1">
+<li>Ratio Medians For Cleaner Signals</li>
+<li>Turbidity Proxy Blue/Green Median &amp; Variance</li>
+<li>coastal/green</li>
+<li>green I / green II</li>
+<li>log(Blue / Green)</li>
+<li>Variances for Temporal Stability Discrimination</li>
+<li>Green</li>
+<li>Blue/Green</li>
+<li>Max-min for Temporal Change Magnitude Discrimination</li>
+<li>Green</li>
+</ol>
+<p>In addition, the NIR and RedEdge could be dropped, as these are likely not useful for underwater cover. Although the NIR may be useful for differentiating water vs land.</p>
+<p>These modifications should be made to the GEE exporting script so that the new selection of bands will be exported rather than the 8 medians. Because there are 3 time-steps included, the total number of bands will be the number of per-aggregation bands times 3.</p>
+</section>
+<section id="todo-attempt-without-landmask-on-median" class="level2">
+<h2 class="anchored" data-anchor-id="todo-attempt-without-landmask-on-median">TODO: attempt without landmask on median</h2>
+<p>Perhaps the land-masked median image is causing issues. We attempt to run the classifier with a full image.</p>
+</section>
+<section id="todo-per-chip-normalization" class="level2">
+<h2 class="anchored" data-anchor-id="todo-per-chip-normalization">TODO: Per-Chip Normalization</h2>
+<p>To remove the ability of the model to learn on brightness alone, the chips can be normalized independently. Because the overall scene brightness characteristics are removed, the model is forced to focus on texture and shape.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
