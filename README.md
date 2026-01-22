@@ -5,7 +5,10 @@ source fn.sh
 newPost my-new-post-name
 emacs posts/YYYY-MM_$POSTNAME/index.qmd
 
-quarto publish
+quarto render
+
+# NOTE: do not run `quarto publish`.
+#       gh-actions will deploy the site.
 ```
 
 
