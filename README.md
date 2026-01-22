@@ -11,6 +11,7 @@ quarto render
 #       gh-actions will deploy the site.
 ```
 
+
 ------------------------------------------------
 
 Quarto-powered blog created from Quarto Docs on "Creating a Blog"[1]
