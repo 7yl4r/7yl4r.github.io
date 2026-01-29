@@ -1,0 +1,43 @@
+---
+title: "Seagrass Change Over Time in FL Bay"
+author: "Tylar"
+date: "2026-01-29"
+---
+
+Here we examine change over time for an area in Florida Bay with the intent of identifying change in seagrass coverage.
+
+Two regions of interest were identified.
+The first is an area of seagrass coverage in Florida Bay.
+The second is an area of nearby deep water.
+
+[This GEE script](https://code.earthengine.google.com/cf141d05bc5e761afae2b859f06ed5b2) was used to extract spectral values over time from harmonized spectral imagery.
+A cloud mask was applied using the CloudScore+ product.
+The spectral bands were normalized relative to the average of all bands.
+Roughly 2300 individual images were composited using a mean into a set of ~650 daily images.
+
+The data is available in [this gSheet](https://docs.google.com/spreadsheets/d/1-rZVy0rA-iKeGdkt5LWZaEb2CPwYsHARr-GXRkOqepM/edit?usp=sharing).
+
+The Submerged Seagrasses Identification Index [^1] was calculated and visualized with a center-adjusted moving average with window size 10.
+
+![SSII-v-time](SSII-v-time.png)
+
+The seasonal signal is clear, however, a seasonal signal is also clear in a time series extracted from the nearby deep water area.
+Although this image product is adjusted for atmospheric and sun angle effects, some seasonal signal remains.
+
+An adjusted SSII was computed to remove seasonal affects that are not related to seagrass growth itself.
+The same extraction was performed for the FL-Bay area and the nearby area of deep water. 
+The SSII was computed for both regions.
+The deep water SSII was subtracted from the FL Bay SSII.
+The remaining signal is an indication of change that is independent of remote sensing changes in the larger region.
+
+![SSII-deepwater-adjusted.png](SSII-deepwater-adjusted.png)
+
+In this series the expected seasonality is still apparent.
+Seagrass coverage is expected to decrease in the winter and increase in the summer.
+The summer maximums are stable when compared to the winter minimums, which show more variablity.
+
+The winters of 2022 and 2023 stand out as seasons of unusually low SSII.
+A potential cause of this anomaly could not be identified.
+
+
+[^1]: https://pubmed.ncbi.nlm.nih.gov/36682175/
