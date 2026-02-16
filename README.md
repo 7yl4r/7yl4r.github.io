@@ -7,8 +7,7 @@ emacs posts/YYYY-MM_$POSTNAME/index.qmd
 
 quarto render
 
-# NOTE: do not run `quarto publish`.
-#       gh-actions will deploy the site.
+quarto publish  # NOTE: I tried to use gh-actions for this, but it kept breaking.
 ```
 
 ------------------------------------------------
