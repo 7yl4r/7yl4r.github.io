@@ -19,3 +19,29 @@ Sentinel images were cloudmasked and the mean was taken from within these areas 
 The resulting values were downloaded as a .csv and imported into [this gsheet](https://docs.google.com/spreadsheets/d/1s2DFIbGCChC2puwLrBrPqXgujDPrJ_vGxG375ZpRY5M/edit?usp=sharing).
 
 The visualizations there were screenshotted into Inkscape and manually annotated.
+
+------------
+
+
+## More on Seasonality
+
+The apparent seasonality in the series is could be explained by seagrass growth patters, water quality changes, and changing optical properties.
+To explore this further an offshore area was selected to use as a baseline reference region.
+A small modification was made to the previous GEE script to create [a script which extracts the deep water region]( https://code.earthengine.google.com/b31a132040a120ba32a5a6747e33aa51).
+
+The NDSVI extracted from the deep water region was subtracted from the seagrass area NDSVI.
+
+![ndsvi-deepWaterCorrected](ndsvi-deepWaterCorrected.png)
+
+The resulting "corrected" signal retains strong seasonality.
+The "hurricane Michael" event is more prominent in this series.
+
+----------------
+
+The same method was applied for an area of "deepish" water from within the sound.
+This baseline reference area should include changes in optical properties and water quality.
+
+![ndsvi-deepishWaterCorrected](ndsvi-deepishWaterCorrected.png)
+
+The remaining seasonality indicates that the seasonal signal of the seagrass area is stronger than the seasonality a nearby area of "deepish" water.
+In this series the "hurricane Michael" event is characterized by a sudden drop in NDSVI during the hurricane, followed by a missing winter peak.
