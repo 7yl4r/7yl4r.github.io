@@ -6,6 +6,10 @@ date: "2026-01-16"
 
 An attempt was made to visualize seagrass change in select regions of St Andrew's Bay using Sentinel 2 imagery.
 
+The Normalized Difference Subaquatic Vegetation Index (NDSVI) index was used.
+This index is calculated as (Green-Blue)/(Green+Blue).
+For Sentinel NDSVI is calculated as (B3-B2)/(B3+B2).
+
 ![st-andrews-seagrass-time-series](st-andrews-seagrass-time-series.png)
 
 *The imact of Hurricane Michael seems apparent, but then the question is: what happened in 2021?*

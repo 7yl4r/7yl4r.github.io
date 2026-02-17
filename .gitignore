@@ -7,3 +7,4 @@
 
 # ubuntu backups
 *~
+**/*.quarto_ipynb
