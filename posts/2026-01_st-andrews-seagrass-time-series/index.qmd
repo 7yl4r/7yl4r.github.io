@@ -10,7 +10,7 @@ The latest script and worksheet is linked below.
 Links in the text may reference older snapshots.
 
 * [TS Extraction GEE Script](https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fimars-simm%3AS2-time-series)
-* [TS Visualization GSheet](https://docs.google.com/spreadsheets/d/1s2DFIbGCChC2puwLrBrPqXgujDPrJ_vGxG375ZpRY5M
+* [TS Visualization GSheet](https://docs.google.com/spreadsheets/d/1s2DFIbGCChC2puwLrBrPqXgujDPrJ_vGxG375ZpRY5M)
 
 # Background
 ## Indices
