@@ -58,7 +58,7 @@ The resulting values were downloaded as a .csv and imported into [this gsheet](h
 ## Indices Time Series
 The three indices were plotted over time for the selected seagrass region.
 
-![ts-all-indices](ts-all-indices.png)
+![seagrassIndices](seagrassIndices.png)
 *Plot of indices extracted from seagrass area.*
 
 Each of the indices shows a seasonal cycle.
@@ -66,10 +66,10 @@ This cycle could be a result of lighting changes, atmospheric changes, water qua
 
 Note that values before 2018 should be treated with extra suspicion, as the number of values extracted from images was low before 2018.
 
-![n-images](n-images.png)
+![nImages](nImages.png)
 
 
-## Causes of Seasonality
+## Baseline Reference Region Corrections
 ### Deep Water Baseline Reference Region
 To explore the cause of the seasonal signal an offshore area was selected to use as a baseline reference region.
 A small modification was made to the previous GEE script to create [a script which extracts the deep water region]( https://code.earthengine.google.com/b31a132040a120ba32a5a6747e33aa51).
@@ -82,6 +82,7 @@ The resulting "corrected" series retain strong seasonality.
 The seasonal signal is unlikely to be from atmospheric or optical changes, as these would have been removed through subtraction of the deep water region.
 The seasonality could be explained by seagrass phenology or turbidity cycles.
 The "hurricane Michael" event is prominent in the NDSVI index.
+
 
 ### Sound Water Baseline Reference Region
 The same method was applied for an area of water from within the sound.
@@ -99,26 +100,30 @@ Seasonality is more consistent for the NDSVI and ND_R_RE indices.
 The WAVI index seems to vary inconsistently throughout the year.
 
 The NDSVI and ND_R_RE signals covary closely.
-The WAVI signal sometimes co-varies and other times shows inverse correlation with the other two indices.
-Inverse correlation seasons are observed in winters of 2020, 2021, and 2024.
-Correlation events are observed in winter 2018, summer 2020, winter 2022, and winter 2025.
-These differences may indicate different kinds of events (turbidity vs algae blooms).
+The WAVI signal shows weaker seasonality and an apparent event in winter of 2022.
+These differences may indicate different kinds of water quality or seagrass phenology events (turbidity vs algae blooms vs seagrass die-off).
 
--------------------------
+### Index Differencing
+By subtracting one index from the other, we can get a sense of how spectral indices are changing over time relative to one another.
+The sound-water-corrected WAVI and NDSWI are each subtracted from the ND_R_RE signal.
 
-The co-varying indices are plotted without the comparatively noisy WAVI index.
+![indicesDifferencesWAVI](indicesDifferencesWAVI.png)
 
-![soundWaterCorrected-NDSVI-ND_R_RE](soundWaterCorrected-NDSVI-ND_R_RE.png)
+The ND_R_RE-WAVI signal shows an event in spring 2021.
+Seasonal peaks in the fall are apparent in most years, but missing in 2023.
 
-In this closer look the winter of 2018 is notable as the smallest trough in the 2018-2026 time series.
-This could be a direct effect of hurricane Michael.
-This event is also characterized by a dis-correlation of the two series. 
-This indicates that a difference between indices could be an indicator of these seagrass-phenology or water quality events.
+-------------
+
+![indicesDifferencesNDSVI](indicesDifferencesNDSVI.png)
+
+The ND_R_RE-NDSVI signal shows an event in the spring of 2019, immediately following hurricane Michael.
+Another similar event is observed in spring of 2025.
+A seasonal cycle between spring and fall is observed in most years.
 
 
-# Future Work / TODO
+# Future Work
 * compare with sandy near-shore area
-* explore differencing indices as described in previous section.
+
 
 # References
 
