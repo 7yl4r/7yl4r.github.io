@@ -152,45 +152,132 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>An attempt was made to visualize seagrass change in select regions of St Andrew’s Bay using Sentinel 2 imagery.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="st-andrews-seagrass-time-series.png" class="img-fluid figure-img"></p>
-<figcaption>st-andrews-seagrass-time-series</figcaption>
-</figure>
-</div>
-<p><em>The imact of Hurricane Michael seems apparent, but then the question is: what happened in 2021?</em></p>
-<hr>
+<p>An attempt was made to visualize seagrass change over time in select regions of St Andrew’s Bay using landsat-harmonized Sentinel 2 imagery.</p>
+<p>The latest script and worksheet is linked below. Links in the text may reference older snapshots.</p>
+<ul>
+<li><a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fimars-simm%3AS2-time-series">TS Extraction GEE Script</a></li>
+<li>[TS Visualization GSheet](https://docs.google.com/spreadsheets/d/1s2DFIbGCChC2puwLrBrPqXgujDPrJ_vGxG375ZpRY5M</li>
+</ul>
+<section id="background" class="level1">
+<h1>Background</h1>
+<section id="indices" class="level2">
+<h2 class="anchored" data-anchor-id="indices">Indices</h2>
+<p>Several Indices are used in this analysis.</p>
+<section id="ndsvi" class="level3">
+<h3 class="anchored" data-anchor-id="ndsvi">NDSVI</h3>
+<p>The Normalized Difference Subaquatic Vegetation Index (NDSVI) index was used. This index is calculated as (Blue-Green)/(Blue+Green). For Sentinel NDSVI is calculated as (B2-B3)/(B2+B3).</p>
+</section>
+<section id="wavi" class="level3">
+<h3 class="anchored" data-anchor-id="wavi">WAVI</h3>
+<p>The Water Adjusted Vegetation Index (WAVI) <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> has been suggested as a useful index for seagrass detection by <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. WAVI is defined as the normalized difference between the near infrared and blue bands. For Sentinel-2 the calculation is <code>WAVI = (B8-B2)/(B8+B2)</code> ```</p>
+</section>
+<section id="nd-red---vre_1" class="level3">
+<h3 class="anchored" data-anchor-id="nd-red---vre_1">ND Red - VRE_1</h3>
+<p>A ratio between red and the first red edge band has been suggested by <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. An index was adapted from this suggestion by applying a normalized difference between the red and first red edge band (<code>ND_r_vre1 = (r-vre1)/(r+vre1)</code>). For Sentinel-2 the calculation is <code>(B4-B5)/(B4+B5)</code>.</p>
+</section>
+</section>
+<section id="events-expected-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="events-expected-patterns">Events &amp; Expected Patterns</h2>
+<section id="seagrass-seasonality" class="level3">
+<h3 class="anchored" data-anchor-id="seagrass-seasonality">Seagrass seasonality</h3>
+<p>Seagrass is known to be more prominent in the summer, so a seasonal cycle is expected.</p>
+</section>
+<section id="hurricane-michael" class="level3">
+<h3 class="anchored" data-anchor-id="hurricane-michael">Hurricane Michael</h3>
+<p>Hurricane Michael was a catagory 5 storm which made landfall around Mexico Beach, FL on 10 October 2018. Mexico beach is approximately 32km (20mi) from the selected region of interest and significant impacts to the area were observed.</p>
+</section>
+</section>
+</section>
+<section id="methods" class="level1">
+<h1>Methods</h1>
+<section id="image-processing" class="level2">
+<h2 class="anchored" data-anchor-id="image-processing">Image Processing</h2>
+<p>Bands were normalized by the sum of all bands. Daily composites were made for days with multiple images. A cloud mask using the CloudScore+ product was applied.</p>
+</section>
+<section id="region-of-interest-selection" class="level2">
+<h2 class="anchored" data-anchor-id="region-of-interest-selection">Region of Interest Selection</h2>
 <p>Two areas of seagrass loss between 2020 and 2024 were manually identified using the IMaRS SIMM project seagrass .tif files.</p>
-<p>Sentinel images were cloudmasked and the mean was taken from within these areas using <a href="https://code.earthengine.google.com/8ef3cc2a42858a2ff19563288d4f313d">this GEE script</a>.</p>
-<p>The resulting values were downloaded as a .csv and imported into <a href="https://docs.google.com/spreadsheets/d/1s2DFIbGCChC2puwLrBrPqXgujDPrJ_vGxG375ZpRY5M/edit?usp=sharing">this gsheet</a>.</p>
-<p>The visualizations there were screenshotted into Inkscape and manually annotated.</p>
-<hr>
-<section id="more-on-seasonality" class="level2">
-<h2 class="anchored" data-anchor-id="more-on-seasonality">More on Seasonality</h2>
-<p>The apparent seasonality in the series is could be explained by seagrass growth patters, water quality changes, and changing optical properties. To explore this further an offshore area was selected to use as a baseline reference region. A small modification was made to the previous GEE script to create <a href="https://code.earthengine.google.com/b31a132040a120ba32a5a6747e33aa51">a script which extracts the deep water region</a>.</p>
-<p>The NDSVI extracted from the deep water region was subtracted from the seagrass area NDSVI.</p>
+</section>
+<section id="workflow" class="level2">
+<h2 class="anchored" data-anchor-id="workflow">Workflow</h2>
+<p>Sentinel images were cloudmasked and the mean was taken from within these areas using <a href="https://code.earthengine.google.com/8ef3cc2a42858a2ff19563288d4f313d">this GEE script</a>. The resulting values were downloaded as a .csv and imported into <a href="https://docs.google.com/spreadsheets/d/1s2DFIbGCChC2puwLrBrPqXgujDPrJ_vGxG375ZpRY5M/edit?usp=sharing">this gsheet</a>.</p>
+</section>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<section id="indices-time-series" class="level2">
+<h2 class="anchored" data-anchor-id="indices-time-series">Indices Time Series</h2>
+<p>The three indices were plotted over time for the selected seagrass region.</p>
+<p><img src="ts-all-indices.png" class="img-fluid" alt="ts-all-indices"> <em>Plot of indices extracted from seagrass area.</em></p>
+<p>Each of the indices shows a seasonal cycle. This cycle could be a result of lighting changes, atmospheric changes, water quality changes, or changes in seagrass.</p>
+<p>Note that values before 2018 should be treated with extra suspicion, as the number of values extracted from images was low before 2018.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="ndsvi-deepWaterCorrected.png" class="img-fluid figure-img"></p>
-<figcaption>ndsvi-deepWaterCorrected</figcaption>
+<p><img src="n-images.png" class="img-fluid figure-img"></p>
+<figcaption>n-images</figcaption>
 </figure>
 </div>
-<p>The resulting “corrected” signal retains strong seasonality. The “hurricane Michael” event is more prominent in this series.</p>
-<hr>
-<p>The same method was applied for an area of “deepish” water from within the sound. This baseline reference area should include changes in optical properties and water quality.</p>
+</section>
+<section id="causes-of-seasonality" class="level2">
+<h2 class="anchored" data-anchor-id="causes-of-seasonality">Causes of Seasonality</h2>
+<section id="deep-water-baseline-reference-region" class="level3">
+<h3 class="anchored" data-anchor-id="deep-water-baseline-reference-region">Deep Water Baseline Reference Region</h3>
+<p>To explore the cause of the seasonal signal an offshore area was selected to use as a baseline reference region. A small modification was made to the previous GEE script to create <a href="https://code.earthengine.google.com/b31a132040a120ba32a5a6747e33aa51">a script which extracts the deep water region</a>.</p>
+<p>The indices extracted from the deep water region were subtracted from the seagrass area.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="ndsvi-deepishWaterCorrected.png" class="img-fluid figure-img"></p>
-<figcaption>ndsvi-deepishWaterCorrected</figcaption>
+<p><img src="deepWaterCorrected.png" class="img-fluid figure-img"></p>
+<figcaption>deepWaterCorrected</figcaption>
 </figure>
 </div>
-<p>The remaining seasonality indicates that the seasonal signal of the seagrass area is stronger than the seasonality a nearby area of “deepish” water. In this series the “hurricane Michael” event is characterized by a sudden drop in NDSVI during the hurricane, followed by a missing winter peak.</p>
+<p>The resulting “corrected” series retain strong seasonality. The seasonal signal is unlikely to be from atmospheric or optical changes, as these would have been removed through subtraction of the deep water region. The seasonality could be explained by seagrass phenology or turbidity cycles. The “hurricane Michael” event is prominent in the NDSVI index.</p>
+</section>
+<section id="sound-water-baseline-reference-region" class="level3">
+<h3 class="anchored" data-anchor-id="sound-water-baseline-reference-region">Sound Water Baseline Reference Region</h3>
+<p>The same method was applied for an area of water from within the sound. This water is not as deep as the offshore region, so changes on the seafloor here may be an issue. Use of this baseline reference area should correct for changes in optical properties and water quality. Any remaining signal would be specific to the seagrass bed. Some water quality differences between the two regions may remain. The two areas are approxmately 2km apart, with the seagrass being further inshore (and shallower).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="soundWaterCorrected.png" class="img-fluid figure-img"></p>
+<figcaption>soundWaterCorrected</figcaption>
+</figure>
+</div>
+<p>The remaining seasonality indicates that the seasonal signal of the seagrass area is stronger than the seasonality a nearby area of “deepish” water.</p>
+<p>Seasonality is more consistent for the NDSVI and ND_R_RE indices. The WAVI index seems to vary inconsistently throughout the year.</p>
+<p>The NDSVI and ND_R_RE signals covary closely. The WAVI signal sometimes co-varies and other times shows inverse correlation with the other two indices. Inverse correlation seasons are observed in winters of 2020, 2021, and 2024. Correlation events are observed in winter 2018, summer 2020, winter 2022, and winter 2025. These differences may indicate different kinds of events (turbidity vs algae blooms).</p>
+<hr>
+<p>The co-varying indices are plotted without the comparatively noisy WAVI index.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="soundWaterCorrected-NDSVI-ND_R_RE.png" class="img-fluid figure-img"></p>
+<figcaption>soundWaterCorrected-NDSVI-ND_R_RE</figcaption>
+</figure>
+</div>
+<p>In this closer look the winter of 2018 is notable as the smallest trough in the 2018-2026 time series. This could be a direct effect of hurricane Michael. This event is also characterized by a dis-correlation of the two series. This indicates that a difference between indices could be an indicator of these seagrass-phenology or water quality events.</p>
+</section>
+</section>
+</section>
+<section id="future-work-todo" class="level1">
+<h1>Future Work / TODO</h1>
+<ul>
+<li>compare with sandy near-shore area</li>
+<li>explore differencing indices as described in previous section.</li>
+</ul>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>https://www.sciencedirect.com/science/article/pii/S0303243414000270<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://os.copernicus.org/articles/18/361/2022/os-18-361-2022.html<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://doi.org/10.1016/j.marenvres.2023.105880<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
