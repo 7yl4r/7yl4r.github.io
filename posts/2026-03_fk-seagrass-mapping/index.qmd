@@ -1,0 +1,43 @@
+---
+title: "Seagrass Mapping in the Florida Keys"
+author: "Tylar"
+date: "2026-03-09"
+---
+
+An attempt was made to map seagrasses in the Florida Keys region.
+
+## Methods
+### Ground Truth Data
+Ground truth data was ingested from the works of Luis Lizcano [^1].
+
+![groundTruth](groundTruth.png)
+**Ground truth data used for the Florida Keys region. Two data collections are displayed; one from 2019 and the other from 2021.The 2019 data is shown in lighter colors than the darker 2021 data. Classes are displayed are: seagrass in green, softbottom in red, and hardbottom (corals) in orange. Source code [here](https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Ffknms%3Aseagrass_ground_truth_lizcano).**
+
+
+### Image Selection
+Images from the landsat-harmonized sentinel 2 collection on GEE were used.
+
+
+### Image Pre-processing
+Clouds were filtered from the images using the CloudScore+ product published on GEE.
+The band values are scaled using the sat_fns:s2_fns.scaleBands method, which implements:
+
+```javascript
+  var scaledImg = img.select(exports.rrs_bands)
+    .divide(10000).divide(3.1415926)
+  ;
+```
+
+## Results
+![results](results.png)
+Initial results show some major issues.
+Next steps might include:
+
+1. land masking
+2. refinement of training points
+3. implement DII
+4. implement bandSum-normalization
+
+
+## References
+[^1] Seagrass Extent Expansion in the Gulf of Mexico and Northwestern Caribbean (1987–2021) Luis Lizcano-Sandoval, Susan Bell, Sergio Cerdeira-Estrada, Beatriz Martinez-Daranas, Enrique Montes, Brigitta van Tussenbroek, Frank Muller-Karger bioRxiv 2025.11.10.687714; doi: https://doi.org/10.1101/2025.11.10.687714
