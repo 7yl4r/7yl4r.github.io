@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/2026-03_fk-seagrass-mapping/index.html",
       "/posts/2026-01_seagrass-change-fl-bay/index.html",
       "/posts/2026-01_st-andrews-seagrass-time-series/index.html",
       "/posts/2025-12_prithvi-mangrove/index.html",
@@ -23,6 +24,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2026-03_fk-seagrass-mapping/index.html",
       "/posts/2026-01_seagrass-change-fl-bay/index.html",
       "/posts/2026-01_st-andrews-seagrass-time-series/index.html",
       "/posts/2025-12_prithvi-mangrove/index.html",
