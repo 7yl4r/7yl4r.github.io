@@ -28,3 +28,4 @@ resources:
   - "index/js/fancybox/*"
   - "index/js/owl-carousel/*"
   - "index/images/*"
+  - "CNAME"
