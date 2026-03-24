@@ -8,10 +8,18 @@ An attempt was made to map seagrasses in the Florida Keys region.
 
 ## Methods
 ### Ground Truth Data
+#### Lizcano 2019 and 2021
 Ground truth data was ingested from the works of Luis Lizcano [^1].
 
 ![groundTruth](groundTruth.png)
 **Ground truth data used for the Florida Keys region. Two data collections are displayed; one from 2019 and the other from 2021.The 2019 data is shown in lighter colors than the darker 2021 data. Classes are displayed are: seagrass in green, softbottom in red, and hardbottom (corals) in orange. Source code [here](https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Ffknms%3Aseagrass_ground_truth_lizcano).**
+
+
+#### FK2025-Visual Ground Truth
+Additional ground truth data was created using visual interpretation of S2 imagery from 2025 and the 2026 google maps satellite view.
+This visual interpretation was guided by the ground truth data of Lizcano to create a ground truth dataset with an increased diversity of classes.
+This dataset separates "dense" submerged aquatic vegetation from "sparse" submerged aquatic vegetation.
+The visual differences between dense and sparse seagrass are significant, and initial tests suggested that segmentation into these subclasses would improve classification accuracy.
 
 
 ### Image Selection
@@ -28,15 +36,54 @@ The band values are scaled using the sat_fns:s2_fns.scaleBands method, which imp
   ;
 ```
 
+Land masking was applied using an NDWI calculation.
+
+A depth-invariant index was applied using statistics calculated from sand polygons across multiple depths.
+
 ## Results
+### Lizcano-trained products
+The first attempt at classification used minimal pre-processing (only cloud filter and scaling) and the Lizcano ground truth data.
+This classification resulted in an image with no seagrass.
+
+For the second result, the same experiment was run with extraneous S2 bands in the dataset removed; only the spectral bands were kept.
+The result was much better, indicating that inclusion of the extra bands were confusing the classifier.
+
 ![results](results1.png)
-Initial results show some major issues.
+
+
+### FK2025-Visual-trained products
+
+* [script used](https://code.earthengine.google.com/fc18cf1a3ed97e7593681e0f7b73a0ea)
+
+![groundTruthAndResults2.png](groundTruthAndResults2.png)
+**Classification and ground truth data for training on the FK2025-Visual data.**
+
+A clear issue with this product can be seen in the top-left of the view, where much of the area appears to be classified as coral.
+A closer view of this area reveals additional characteristics of this issue.
+
+![results2ConfusionRegionTopLeft](results2ConfusionRegionTopLeft.png)
+**Zoomed in view of top-left region with classification inaccuracies. Classification results (left) are very speckled and show features characteristic of image artifacts. S2 mean for the time range shows artifacts from mosaicing and cloud masking.**
+
+One potential cause could be poor image coverage of this area, resulting in a poor quality mean image.
+This could be explored further by mapping the image count per pixel.
+
+Another explaination that accounts for the speckled texture is that this area is highly impacted by sunglint.
+Sunglint removal processing could reduce this misclassification.
+
+Additional ground truth points could be used in this area, but I am uncertain what the true class of this region should be.
+The spectral signature appears different from the deep-water areas past the reef tract.
+I do not know what the depth in this region is.
+
+## Next Steps 
+
 Next steps might include:
 
-1. land masking
-2. refinement of training points
-3. implement DII
+
+1. sunglint correction
+2. addition of texture 'bands'
+3. addition of a bathymetric 'band'
 4. implement bandSum-normalization
+
 
 
 ## References
