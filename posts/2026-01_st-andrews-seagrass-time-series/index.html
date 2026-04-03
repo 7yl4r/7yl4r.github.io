@@ -220,6 +220,8 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="baseline-reference-region-corrections" class="level2">
 <h2 class="anchored" data-anchor-id="baseline-reference-region-corrections">Baseline Reference Region Corrections</h2>
+<p>Baseline “reference region” polygons were extracted to remove additional signal artifacts that are not localized to the target AoI. The mean value from the “reference region” polygon was subtracted from the mean value of the area of interest polygon.</p>
+<p>You can see the details in the deepWater and soundWater tabs of the <a href="https://docs.google.com/spreadsheets/d/1s2DFIbGCChC2puwLrBrPqXgujDPrJ_vGxG375ZpRY5M/edit?gid=1859197953#gid=1859197953">gsheet</a>. Look in the columns like “seagrassArea - soundWater”.</p>
 <section id="deep-water-baseline-reference-region" class="level3">
 <h3 class="anchored" data-anchor-id="deep-water-baseline-reference-region">Deep Water Baseline Reference Region</h3>
 <p>To explore the cause of the seasonal signal an offshore area was selected to use as a baseline reference region. A small modification was made to the previous GEE script to create <a href="https://code.earthengine.google.com/b31a132040a120ba32a5a6747e33aa51">a script which extracts the deep water region</a>.</p>

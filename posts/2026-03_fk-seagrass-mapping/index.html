@@ -202,12 +202,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Additional ground truth data was created using visual interpretation of S2 imagery from 2025 and the 2026 google maps satellite view. This visual interpretation was guided by the ground truth data of Lizcano to create a ground truth dataset with an increased diversity of classes. This dataset separates “dense” submerged aquatic vegetation from “sparse” submerged aquatic vegetation. The visual differences between dense and sparse seagrass are significant, and initial tests suggested that segmentation into these subclasses would improve classification accuracy.</p>
 </section>
 </section>
-<section id="image-selection" class="level3">
-<h3 class="anchored" data-anchor-id="image-selection">Image Selection</h3>
+<section id="s2-multispectral-images" class="level3">
+<h3 class="anchored" data-anchor-id="s2-multispectral-images">S2 Multispectral Images</h3>
 <p>Images from the landsat-harmonized sentinel 2 collection on GEE were used.</p>
-</section>
-<section id="image-pre-processing" class="level3">
-<h3 class="anchored" data-anchor-id="image-pre-processing">Image Pre-processing</h3>
+<section id="s2-image-pre-processing" class="level4">
+<h4 class="anchored" data-anchor-id="s2-image-pre-processing">S2 Image Pre-processing</h4>
 <p>Clouds were filtered from the images using the CloudScore+ product published on GEE. The band values are scaled using the sat_fns:s2_fns.scaleBands method, which implements:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> scaledImg <span class="op">=</span> img<span class="op">.</span><span class="fu">select</span>(exports<span class="op">.</span><span class="at">rrs_bands</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">divide</span>(<span class="dv">10000</span>)<span class="op">.</span><span class="fu">divide</span>(<span class="fl">3.1415926</span>)</span>
@@ -216,10 +215,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A depth-invariant index was applied using statistics calculated from sand polygons across multiple depths.</p>
 </section>
 </section>
+<section id="bathymetry-layer" class="level3">
+<h3 class="anchored" data-anchor-id="bathymetry-layer">Bathymetry Layer</h3>
+<p>NOAA’s BlueTopo layer was extracted and uploaded into GEE.</p>
+<p>A geojson for the FL Keys was created:</p>
+<pre><code>(base) tylar@tylar-laptop:~/Documents$ cat fk.geojson 
+{
+  "type": "FeatureCollection",
+  "features": [{
+    "type": "Feature",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[[-82.5, 24.0], [-80.0, 24.0], [-80.0, 25.5], [-82.5, 25.5], [-82.5, 24.0]]]
+    },
+    "properties": {}
+  }]
+}</code></pre>
+<p>Conda and mamba were installed. A conda environment was specified with an <code>environment.yml</code> file:</p>
+<pre><code>name: habitat-mapping                                                                                               
+channels:                                                                                                           
+  - conda-forge                                                                                                     
+dependencies:                                                                                                       
+  - python=3.12                                                                                                     
+  - gdal=3.12                                                                                                       </code></pre>
+<p>The environment was installed:</p>
+<pre><code>mamba env create -f environment.yml</code></pre>
+<p>The environment wass activated and dependencies installed:</p>
+<pre><code>conda activate habitat-mapping
+pip install bluetopo</code></pre>
+<p>The bluetopo tool was used to fetch tiles and buld a virtual raster (<code>.vrt</code>) file.</p>
+<pre><code>(habitat-mapping) tylar@tylar-laptop:~/Documents/bluetopo$ fetch_tiles -d /home/tylar/Documents/bluetopo/fl_keys_bluetopo_tiles -g /home/tylar/Documents/bluetopo/fk.geojson
+
+(habitat-mapping) tylar@tylar-laptop:~/Documents/bluetopo$ build_vrt -d /home/tylar/Documents/bluetopo/fl_keys_bluetopo_tiles</code></pre>
+<p>The <code>.vrt</code> was converted to WGS84 and built into a single <code>.tif</code> file using <code>gdal</code>. NOTE: This would be a good stage to drop bands 2 and 3, keeping only the b1 (elevation) band to reduce file size; this was not done here.</p>
+<pre><code>(habitat-mapping) tylar@tylar-laptop:~/Documents/bluetopo$ gdalwarp -t_srs EPSG:4326 -s_srs "EPSG:26917+5703" -r bilinear -overwrite -co COMPRESS=DEFLATE -co TILED=YES -co BIGTIFF=IF_SAFER fl_keys_bluetopo_tiles/BlueTopo_VRT/BlueTopo_Fetched_UTM17.vrt fl_keys_bluetopo_wgs84.tif
+
+
+gdal_translate -of COG -co COMPRESS=DEFLATE -co BIGTIFF=YES fl_keys_bluetopo_wgs84.tif fl_keys_bluetopo_cog.tif</code></pre>
+<p>The <code>.tif</code> was uploading into google earth engine’s assets using the assets web interface at code.earthengine.google.com.</p>
+</section>
+</section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<section id="lizcano-trained-products" class="level3">
-<h3 class="anchored" data-anchor-id="lizcano-trained-products">Lizcano-trained products</h3>
+<section id="s2-lizcano-trained-products" class="level3">
+<h3 class="anchored" data-anchor-id="s2-lizcano-trained-products">S2 Lizcano-trained products</h3>
 <p>The first attempt at classification used minimal pre-processing (only cloud filter and scaling) and the Lizcano ground truth data. This classification resulted in an image with no seagrass.</p>
 <p>For the second result, the same experiment was run with extraneous S2 bands in the dataset removed; only the spectral bands were kept. The result was much better, indicating that inclusion of the extra bands were confusing the classifier.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -229,8 +268,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </section>
-<section id="fk2025-visual-trained-products" class="level3">
-<h3 class="anchored" data-anchor-id="fk2025-visual-trained-products">FK2025-Visual-trained products</h3>
+<section id="s2-fk2025-visual-trained-without-bathymetry" class="level3">
+<h3 class="anchored" data-anchor-id="s2-fk2025-visual-trained-without-bathymetry">S2 FK2025-Visual-trained Without Bathymetry</h3>
 <ul>
 <li><a href="https://code.earthengine.google.com/fc18cf1a3ed97e7593681e0f7b73a0ea">script used</a></li>
 </ul>
@@ -240,6 +279,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>One potential cause could be poor image coverage of this area, resulting in a poor quality mean image. This could be explored further by mapping the image count per pixel.</p>
 <p>Another explaination that accounts for the speckled texture is that this area is highly impacted by sunglint. Sunglint removal processing could reduce this misclassification.</p>
 <p>Additional ground truth points could be used in this area, but I am uncertain what the true class of this region should be. The spectral signature appears different from the deep-water areas past the reef tract. I do not know what the depth in this region is.</p>
+</section>
+<section id="s2-fk2025-visual-trained-with-bathymetry" class="level3">
+<h3 class="anchored" data-anchor-id="s2-fk2025-visual-trained-with-bathymetry">S2 FK2025-Visual-trained With Bathymetry</h3>
+<ul>
+<li><a href="https://code.earthengine.google.com/2e4d2cdac5d283210f6de47350ee179e">script</a></li>
+</ul>
+<p>With the addition of the bathymetry the map appears improved.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="results-w-bathy.png" class="img-fluid figure-img"></p>
+<figcaption>results-w-bathy</figcaption>
+</figure>
+</div>
 </section>
 </section>
 <section id="next-steps" class="level2">
