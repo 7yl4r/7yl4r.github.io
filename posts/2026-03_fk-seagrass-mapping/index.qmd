@@ -22,11 +22,11 @@ This dataset separates "dense" submerged aquatic vegetation from "sparse" submer
 The visual differences between dense and sparse seagrass are significant, and initial tests suggested that segmentation into these subclasses would improve classification accuracy.
 
 
-### Image Selection
+### S2 Multispectral Images
 Images from the landsat-harmonized sentinel 2 collection on GEE were used.
 
 
-### Image Pre-processing
+#### S2 Image Pre-processing
 Clouds were filtered from the images using the CloudScore+ product published on GEE.
 The band values are scaled using the sat_fns:s2_fns.scaleBands method, which implements:
 
@@ -40,8 +40,70 @@ Land masking was applied using an NDWI calculation.
 
 A depth-invariant index was applied using statistics calculated from sand polygons across multiple depths.
 
+
+### Bathymetry Layer
+NOAA's BlueTopo layer was extracted and uploaded into GEE.
+
+A geojson for the FL Keys was created:
+```
+(base) tylar@tylar-laptop:~/Documents$ cat fk.geojson 
+{
+  "type": "FeatureCollection",
+  "features": [{
+    "type": "Feature",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[[-82.5, 24.0], [-80.0, 24.0], [-80.0, 25.5], [-82.5, 25.5], [-82.5, 24.0]]]
+    },
+    "properties": {}
+  }]
+}
+```
+
+Conda and mamba were installed. 
+A conda environment was specified with an `environment.yml` file:
+```
+name: habitat-mapping                                                                                               
+channels:                                                                                                           
+  - conda-forge                                                                                                     
+dependencies:                                                                                                       
+  - python=3.12                                                                                                     
+  - gdal=3.12                                                                                                       
+```
+
+The environment was installed:
+
+```
+mamba env create -f environment.yml
+```
+
+The environment wass activated and dependencies installed:
+```
+conda activate habitat-mapping
+pip install bluetopo
+```
+
+The bluetopo tool was used to fetch tiles and buld a virtual raster (`.vrt`) file. 
+```
+(habitat-mapping) tylar@tylar-laptop:~/Documents/bluetopo$ fetch_tiles -d /home/tylar/Documents/bluetopo/fl_keys_bluetopo_tiles -g /home/tylar/Documents/bluetopo/fk.geojson
+
+(habitat-mapping) tylar@tylar-laptop:~/Documents/bluetopo$ build_vrt -d /home/tylar/Documents/bluetopo/fl_keys_bluetopo_tiles
+```
+
+The `.vrt` was converted to WGS84 and built into a single `.tif` file using `gdal`.
+NOTE: This would be a good stage to drop bands 2 and 3, keeping only the b1 (elevation) band to reduce file size; this was not done here.
+```
+(habitat-mapping) tylar@tylar-laptop:~/Documents/bluetopo$ gdalwarp -t_srs EPSG:4326 -s_srs "EPSG:26917+5703" -r bilinear -overwrite -co COMPRESS=DEFLATE -co TILED=YES -co BIGTIFF=IF_SAFER fl_keys_bluetopo_tiles/BlueTopo_VRT/BlueTopo_Fetched_UTM17.vrt fl_keys_bluetopo_wgs84.tif
+
+
+gdal_translate -of COG -co COMPRESS=DEFLATE -co BIGTIFF=YES fl_keys_bluetopo_wgs84.tif fl_keys_bluetopo_cog.tif
+```
+
+The `.tif` was uploading into google earth engine's assets using the assets web interface at code.earthengine.google.com.
+
+
 ## Results
-### Lizcano-trained products
+### S2 Lizcano-trained products
 The first attempt at classification used minimal pre-processing (only cloud filter and scaling) and the Lizcano ground truth data.
 This classification resulted in an image with no seagrass.
 
@@ -51,7 +113,7 @@ The result was much better, indicating that inclusion of the extra bands were co
 ![results](results1.png)
 
 
-### FK2025-Visual-trained products
+### S2 FK2025-Visual-trained Without Bathymetry
 
 * [script used](https://code.earthengine.google.com/fc18cf1a3ed97e7593681e0f7b73a0ea)
 
@@ -73,6 +135,14 @@ Sunglint removal processing could reduce this misclassification.
 Additional ground truth points could be used in this area, but I am uncertain what the true class of this region should be.
 The spectral signature appears different from the deep-water areas past the reef tract.
 I do not know what the depth in this region is.
+
+
+### S2 FK2025-Visual-trained With Bathymetry
+* [script](https://code.earthengine.google.com/2e4d2cdac5d283210f6de47350ee179e)
+
+With the addition of the bathymetry the map appears improved.
+
+![results-w-bathy](results-w-bathy.png)
 
 ## Next Steps 
 
