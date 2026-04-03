@@ -70,6 +70,11 @@ Note that values before 2018 should be treated with extra suspicion, as the numb
 
 
 ## Baseline Reference Region Corrections
+Baseline "reference region" polygons were extracted to remove additional signal artifacts that are not localized to the target AoI.
+The mean value from the "reference region" polygon was subtracted from the mean value of the area of interest polygon.
+
+You can see the details in the deepWater and soundWater tabs of the [gsheet](https://docs.google.com/spreadsheets/d/1s2DFIbGCChC2puwLrBrPqXgujDPrJ_vGxG375ZpRY5M/edit?gid=1859197953#gid=1859197953). Look in the columns like "seagrassArea - soundWater".
+
 ### Deep Water Baseline Reference Region
 To explore the cause of the seasonal signal an offshore area was selected to use as a baseline reference region.
 A small modification was made to the previous GEE script to create [a script which extracts the deep water region]( https://code.earthengine.google.com/b31a132040a120ba32a5a6747e33aa51).
