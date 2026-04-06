@@ -188,6 +188,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>An attempt was made to map seagrasses in the Florida Keys region.</p>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<section id="existing-maps" class="level3">
+<h3 class="anchored" data-anchor-id="existing-maps">Existing Maps</h3>
+<section id="floridas-unified-reef-map" class="level4">
+<h4 class="anchored" data-anchor-id="floridas-unified-reef-map">Florida’s Unified Reef Map</h4>
+<p>https://experience.arcgis.com/experience/a7ef122627414ee1a72c0a6a7527edff</p>
+</section>
+</section>
+</section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <section id="ground-truth-data" class="level3">
@@ -259,7 +269,7 @@ gdal_translate -of COG -co COMPRESS=DEFLATE -co BIGTIFF=YES fl_keys_bluetopo_wgs
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <section id="s2-lizcano-trained-products" class="level3">
 <h3 class="anchored" data-anchor-id="s2-lizcano-trained-products">S2 Lizcano-trained products</h3>
-<p>The first attempt at classification used minimal pre-processing (only cloud filter and scaling) and the Lizcano ground truth data. This classification resulted in an image with no seagrass.</p>
+<p>The first attempt at classification used minimal pre-processing (only cloud filter and scaling) and the Lizcano ground truth data. Bands ‘B1’,‘B2’,‘B3’,‘B4’,‘B2B3’ were used. This classification resulted in an image with no seagrass.</p>
 <p>For the second result, the same experiment was run with extraneous S2 bands in the dataset removed; only the spectral bands were kept. The result was much better, indicating that inclusion of the extra bands were confusing the classifier.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -273,6 +283,7 @@ gdal_translate -of COG -co COMPRESS=DEFLATE -co BIGTIFF=YES fl_keys_bluetopo_wgs
 <ul>
 <li><a href="https://code.earthengine.google.com/fc18cf1a3ed97e7593681e0f7b73a0ea">script used</a></li>
 </ul>
+<p>Bands ‘B1’,‘B2’,‘B3’,‘B4’,‘B2B3’ were used.</p>
 <p><img src="groundTruthAndResults2.png" class="img-fluid" alt="groundTruthAndResults2.png"> <strong>Classification and ground truth data for training on the FK2025-Visual data.</strong></p>
 <p>A clear issue with this product can be seen in the top-left of the view, where much of the area appears to be classified as coral. A closer view of this area reveals additional characteristics of this issue.</p>
 <p><img src="results2ConfusionRegionTopLeft.png" class="img-fluid" alt="results2ConfusionRegionTopLeft"> <strong>Zoomed in view of top-left region with classification inaccuracies. Classification results (left) are very speckled and show features characteristic of image artifacts. S2 mean for the time range shows artifacts from mosaicing and cloud masking.</strong></p>
@@ -285,13 +296,18 @@ gdal_translate -of COG -co COMPRESS=DEFLATE -co BIGTIFF=YES fl_keys_bluetopo_wgs
 <ul>
 <li><a href="https://code.earthengine.google.com/2e4d2cdac5d283210f6de47350ee179e">script</a></li>
 </ul>
-<p>With the addition of the bathymetry the map appears improved.</p>
+<p>Using only bands ‘B1’,‘B2’,‘B3’,‘B4’,‘B2B3’. With the addition of the bathymetry:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="results-w-bathy.png" class="img-fluid figure-img"></p>
 <figcaption>results-w-bathy</figcaption>
 </figure>
 </div>
+<ul>
+<li>The hard-cover/coral class is showing up where it should not.</li>
+<li>The deep water class is showing up in very shallow, sandy areas</li>
+<li>Interesting features in the west which are not visible in the RGB.</li>
+</ul>
 </section>
 </section>
 <section id="next-steps" class="level2">
