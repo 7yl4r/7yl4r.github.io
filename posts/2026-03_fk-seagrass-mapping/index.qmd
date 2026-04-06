@@ -6,6 +6,12 @@ date: "2026-03-09"
 
 An attempt was made to map seagrasses in the Florida Keys region.
 
+
+## Background
+### Existing Maps
+#### Florida's Unified Reef Map
+https://experience.arcgis.com/experience/a7ef122627414ee1a72c0a6a7527edff
+
 ## Methods
 ### Ground Truth Data
 #### Lizcano 2019 and 2021
@@ -140,9 +146,13 @@ I do not know what the depth in this region is.
 ### S2 FK2025-Visual-trained With Bathymetry
 * [script](https://code.earthengine.google.com/2e4d2cdac5d283210f6de47350ee179e)
 
-With the addition of the bathymetry the map appears improved.
+With the addition of the bathymetry:
 
 ![results-w-bathy](results-w-bathy.png)
+
+* The hard-cover/coral class is showing up where it should not.
+* The deep water class is showing up in very shallow, sandy areas
+* Interesting features in the west which are not visible in the RGB.
 
 ## Next Steps 
 
