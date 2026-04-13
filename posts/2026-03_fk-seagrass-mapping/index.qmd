@@ -111,6 +111,7 @@ The `.tif` was uploading into google earth engine's assets using the assets web 
 ## Results
 ### S2 Lizcano-trained products
 The first attempt at classification used minimal pre-processing (only cloud filter and scaling) and the Lizcano ground truth data.
+Bands 'B1','B2','B3','B4','B2B3' were used.
 This classification resulted in an image with no seagrass.
 
 For the second result, the same experiment was run with extraneous S2 bands in the dataset removed; only the spectral bands were kept.
@@ -122,6 +123,8 @@ The result was much better, indicating that inclusion of the extra bands were co
 ### S2 FK2025-Visual-trained Without Bathymetry
 
 * [script used](https://code.earthengine.google.com/fc18cf1a3ed97e7593681e0f7b73a0ea)
+
+Bands 'B1','B2','B3','B4','B2B3' were used.
 
 ![groundTruthAndResults2.png](groundTruthAndResults2.png)
 **Classification and ground truth data for training on the FK2025-Visual data.**
@@ -146,6 +149,7 @@ I do not know what the depth in this region is.
 ### S2 FK2025-Visual-trained With Bathymetry
 * [script](https://code.earthengine.google.com/2e4d2cdac5d283210f6de47350ee179e)
 
+Using only bands 'B1','B2','B3','B4','B2B3'.
 With the addition of the bathymetry:
 
 ![results-w-bathy](results-w-bathy.png)
