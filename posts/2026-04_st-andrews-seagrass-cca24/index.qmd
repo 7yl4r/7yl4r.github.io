@@ -35,7 +35,7 @@ Four spectral indices are calculated from the raw band values to target seagrass
 
 
 ## Seasonal Decomposition, Reference Region Adjustment, & Results
-A seasonal decomposition with an additive model was applied to separate the seasonal signal from long term trends and residuals.
+A seasonal decomposition with an additive model was applied to separate the seasonal signal from long term trends and residuals using [https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.seasonal_decompose.html](https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.seasonal_decompose.html).
 
 The reference region is used as a baseline against which to compare the AoI.
 This can be done with a subtraction or a division operation.
