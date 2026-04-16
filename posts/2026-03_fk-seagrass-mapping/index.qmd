@@ -37,6 +37,7 @@ Based on this seagrass points were added for this region.
 The water in this area is shallow and often very turbid.
 The turbidity may cause issues for the classifier.
 
+
 ### S2 Multispectral Images
 Images from the landsat-harmonized sentinel 2 collection on GEE were used.
 
@@ -169,8 +170,13 @@ With the addition of the bathymetry:
 
 
 ### S2 FK2025-Visual-v2-trained With Bathymetry
+With seagrass allowed in the northwest region and the hardcover class being excluded, the results are looking quite good.
 
-http://serc.fiu.edu/seagrass/!CDReport/Synoptic/Maps/ALLHD.JPG
+![results-w-bathy-v2](results-w-bathy-v2.png)
+
+Some features in the northwest from the bathymetry layer seem over-pronounced.
+Further refinement of the ground truth data from regional experts is needed.
+
 
 
 ## Next Steps 
@@ -180,8 +186,7 @@ Next steps might include:
 
 1. sunglint correction
 2. addition of texture 'bands'
-3. addition of a bathymetric 'band'
-4. implement bandSum-normalization
+3. implement bandSum-normalization
 
 
 
