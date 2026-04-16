@@ -184,31 +184,30 @@ ul.task-list li input[type="checkbox"] {
 <li>Normalized Difference red_edge1-red <code>(B5-B4)/(B5+B4)</code></li>
 </ol>
 </section>
-<section id="seasonal-decomposition-reference-region-adjustment-results" class="level2">
-<h2 class="anchored" data-anchor-id="seasonal-decomposition-reference-region-adjustment-results">Seasonal Decomposition, Reference Region Adjustment, &amp; Results</h2>
-<p>A seasonal decomposition with an additive model was applied to separate the seasonal signal from long term trends and residuals.</p>
-<p>The reference region is used as a baseline against which to compare the AoI. This can be done with a subtraction or a division operation.</p>
-<p>The resulting differenced values are converted to z-scores for display on a common y-axis.</p>
-<section id="subtraction" class="level3">
-<h3 class="anchored" data-anchor-id="subtraction">Subtraction</h3>
+<section id="reference-region-adjustment" class="level2">
+<h2 class="anchored" data-anchor-id="reference-region-adjustment">Reference Region Adjustment</h2>
+<p>The reference region is used as a baseline against which to compare the AoI. The region is intended to be very similar to the AoI, but without the restoration efforts applied. This adjusts for transient water clarity events and seasonal signals that affect the broader area.</p>
+<p>Values in the extracted time series have similar distributions across all bands and indices.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="indices-model-subtract.png" class="img-fluid figure-img"></p>
-<figcaption>indices-model-subtract</figcaption>
+<p><img src="violin.png" class="img-fluid figure-img"></p>
+<figcaption>violin</figcaption>
 </figure>
 </div>
-<p>A sine-shaped seasonal signal is observed in each of the indices. Long-term trends for WAVI, red_edge1_red_ratio, and ND_red_edge1_red follow each other closely.</p>
 </section>
-<section id="division" class="level3">
-<h3 class="anchored" data-anchor-id="division">Division</h3>
+<section id="seasonal-decomposition" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-decomposition">Seasonal Decomposition</h2>
+<p>A seasonal decomposition with an additive model was applied to separate the seasonal signal from long term trends and residuals using <a href="https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.seasonal_decompose.html">https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.seasonal_decompose.html</a>.</p>
+<p>The resulting differenced values are converted to z-scores for display on a common y-axis.</p>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="indices-model-divide.png" class="img-fluid figure-img"></p>
-<figcaption>indices-model-divide</figcaption>
+<p><img src="indices-model.png" class="img-fluid figure-img"></p>
+<figcaption>indices-model</figcaption>
 </figure>
 </div>
-<p>The expected sine-wave-shaped seasonal signal is apparent in the red_edge1_red_ratio index. The other three indices have less well-defined seasonal signals.</p>
-<p>Spikes in the residuals are observed; these may be the result of divide-by-almost-zero when the reference region has very low values.</p>
+<p>A sine-shaped seasonal signal is observed in each of the indices. Long-term trends for all indices follow each other closely at some times and diverge at others.</p>
 
 
 </section>
