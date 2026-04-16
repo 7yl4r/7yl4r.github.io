@@ -45,7 +45,7 @@ Values in the extracted time series have similar distributions across all bands 
 
 
 ## Seasonal Decomposition
-A seasonal decomposition with an additive model was applied to separate the seasonal signal from long term trends and residuals using [https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.seasonal_decompose.html](https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.seasonal_decompose.html).
+A seasonal decomposition with an additive model was applied to separate the seasonal signal from long term trends and residuals using [statsmodels' seasonal_decompose](https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.seasonal_decompose.html).
 
 The resulting differenced values are converted to z-scores for display on a common y-axis.
 
