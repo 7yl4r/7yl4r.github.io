@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tylar">
-<meta name="dcterms.date" content="2026-04-13">
+<meta name="dcterms.date" content="2026-04-21">
 
-<title>FL Coastal Conservation Association Prop Scarring From Satellite – tylar.info</title>
+<title>Sentinel-2 Time Series For The El Dorado Grounding – tylar.info</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">FL Coastal Conservation Association Prop Scarring From Satellite</h1>
+      <h1 class="title">Sentinel-2 Time Series For The El Dorado Grounding</h1>
                       </div>
   </div>
     
@@ -133,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 13, 2026</p>
+        <p class="date">April 21, 2026</p>
       </div>
     </div>
     
@@ -152,66 +152,48 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>An attempt was made to detect changes in spectral signals due to prop scarring and restoration efforts.</p>
+<p>The 147-foot commercial vessel El Dorado ran aground in North Bay, St.&nbsp;Andrew Bay, FL, following Hurricane Michael 2018-10-10, settling in 2-3 feet of water on a seagrass bed near Carl Grey Park and the Hathaway Bridge. Salvage work continued through 2019-03-03.</p>
 <ul>
-<li><a href="https://code.earthengine.google.com/?scriptPath=users%2Ftylarmurray%2Fst-andrews-bay%3Aseagrass_time_series_extraction">GEE Script</a></li>
-<li><a href="https://colab.research.google.com/drive/1b0n4yCncdD2ta9RMdo5JHPOp7-d16VJG?usp=sharing">colab notebook</a></li>
+<li><a href="https://code.earthengine.google.com/dee4c91ef954cd41d308f906b5b946d6">GEE Script</a></li>
+<li><a href="https://gist.github.com/7yl4r/36ce61f766df9a6e942d8b47432bafb0">JupyterNotebook</a></li>
 </ul>
-<section id="area-of-interest" class="level2">
-<h2 class="anchored" data-anchor-id="area-of-interest">Area of Interest</h2>
-<p>A polygon for the Area of Interest (AoI) were hand-drawn to approximate polygons identified in the “CCA24 Phase 1 Installation Map Package_Nov2025.pdf” document [<a href="https://mail.google.com/mail/u/0/#inbox/QgrcJHrtvXGVDzJrWNBtpcnWhKQkmNhFSbq?compose=GTvVlcSPFdFRvFsCtsrSZmGTCvmQxxlMspnpxHXVPZXzFpbLFbzWkCkpQjXJpVwZVfPqzJgVmCVjs">ref email for Tylar only</a>].</p>
-<p>A “reference region” of nearby area with similar optical characteristics was drawn.</p>
+<hr>
+<p>A cloud-masked median of Sentinel-2 imagery was composited for the duration of the vessel’s grounding.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="AoI.png" class="img-fluid figure-img"></p>
-<figcaption>AoI</figcaption>
+<p><img src="st-andrews-el-dorado-grounding.png" class="img-fluid figure-img"></p>
+<figcaption>st-andrews-el-dorado-grounding</figcaption>
 </figure>
 </div>
-</section>
-<section id="imagery-preprocessing-time-series-extraction" class="level2">
-<h2 class="anchored" data-anchor-id="imagery-preprocessing-time-series-extraction">Imagery, PreProcessing, Time Series Extraction</h2>
-<p>Landsat-Harmonized Sentinel-2 imagery was sampled across these polygons using <a href="https://code.earthengine.google.com/0fc75bdfecb0c44daf61c73419c64bac">this GEE script</a>.</p>
-<p>CloudScore+ cloud filtering was applied. BandSum normalization was performed using the sum of all bands except for band 9.</p>
-<p>The resulting time series data were uploaded to <a href="https://github.com/7yl4r/HabEvent/tree/main/aoi-extractions">github/7yl4r/HabEvent/aoi-extractions</a>.</p>
-</section>
-<section id="indices" class="level2">
-<h2 class="anchored" data-anchor-id="indices">Indices</h2>
-<p>Four spectral indices are calculated from the raw band values to target seagrass.</p>
-<ol type="1">
-<li>WAVI: <code>(B8-B2)/(B8+B2)</code></li>
-<li>inverse NDSVI (~NDSVI) <code>(B3-B2)/(B3+B2)</code></li>
-<li>red_edge1/red <code>B5/B4</code></li>
-<li>Normalized Difference red_edge1-red <code>(B5-B4)/(B5+B4)</code></li>
-</ol>
-</section>
-<section id="reference-region-adjustment" class="level2">
-<h2 class="anchored" data-anchor-id="reference-region-adjustment">Reference Region Adjustment</h2>
-<p>The reference region is used as a baseline against which to compare the AoI. The region is intended to be very similar to the AoI, but without the restoration efforts applied. This adjusts for transient water clarity events and seasonal signals that affect the broader area.</p>
-<p>Values in the extracted time series have similar distributions across all bands and indices.</p>
+<p>The image on the left is Sentinel-2 averaged over the El Dorado’s grounding (2018-10-10 to 2019-03-03). The circled object is assumed to be the El Dorado. On the right is google earth’s imagery from 2026-04, and it appears a scar is still there.</p>
+<hr>
+<p>A polygon around the El Dorado was hand-drawn and a time series was extracted from the region using <a href="https://code.earthengine.google.com/dee4c91ef954cd41d308f906b5b946d6">this GEE script</a>. 626 images from the 2018-01-01 to 2025-04-21 time range were used in the extraction. From the extracted spectral bands, four seagrass indices were calculated. A seasonal decomposition was applied to the resulting time series.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="violin.png" class="img-fluid figure-img"></p>
-<figcaption>violin</figcaption>
+<p><img src="result-no-reference-region.png" class="img-fluid figure-img"></p>
+<figcaption>result-no-reference-region</figcaption>
 </figure>
 </div>
-</section>
-<section id="seasonal-decomposition" class="level2">
-<h2 class="anchored" data-anchor-id="seasonal-decomposition">Seasonal Decomposition</h2>
-<p>A seasonal decomposition with an additive model was applied to separate the seasonal signal from long term trends and residuals using <a href="https://www.statsmodels.org/dev/generated/statsmodels.tsa.seasonal.seasonal_decompose.html">statsmodels’ seasonal_decompose</a>.</p>
-<p>The resulting differenced values are converted to z-scores for display on a common y-axis.</p>
-<section id="results" class="level3">
-<h3 class="anchored" data-anchor-id="results">Results</h3>
+<p>The seasonality for the four indices do not align well. ~NDSVI seasonality peaks in the winter, and the other three peak in the summer. The WAVI seasonality peaks earlier in the summer than the two red-to-red-edge differences.</p>
+<p>The trends show an event from late 2018 through mid-2019. This is the grounded El Dorado’s bright signal.</p>
+<hr>
+<p>A “reference region” was established near the El Dorado.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="indices-model.png" class="img-fluid figure-img"></p>
-<figcaption>indices-model</figcaption>
+<p><img src="polygons.png" class="img-fluid figure-img"></p>
+<figcaption>polygons</figcaption>
 </figure>
 </div>
-<p>A sine-shaped seasonal signal is observed in each of the indices. Long-term trends for all indices follow each other closely at some times and diverge at others.</p>
+<p>This region was subtracted from the “El Dorado” AoI to remove any potential regional image clarity issues. A seasonal decomposition was run on the z-scores of the resulting differences.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="resuts-reference-region-corrected.png" class="img-fluid figure-img"></p>
+<figcaption>resuts-reference-region-corrected</figcaption>
+</figure>
+</div>
+<p>The seasonality of all four indices is well aligned, with a peak in the summer. The El Dorado grounding event is visible in the trend of the WAVI. For the other three indices, the El Dorado grounding event peaks are less apparent. In the residuals, the WAVI and red_edge1_red_ratio show peaks during the El Dorado Grounding.</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
