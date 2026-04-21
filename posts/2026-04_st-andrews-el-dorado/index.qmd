@@ -7,6 +7,9 @@ date: "2026-04-21"
 The 147-foot commercial vessel El Dorado ran aground in North Bay, St. Andrew Bay, FL, following Hurricane Michael 2018-10-10, settling in 2-3 feet of water on a seagrass bed near Carl Grey Park and the Hathaway Bridge.
 Salvage work continued through 2019-03-03.
 
+* [GEE Script](https://code.earthengine.google.com/dee4c91ef954cd41d308f906b5b946d6)
+* [JupyterNotebook](https://gist.github.com/7yl4r/36ce61f766df9a6e942d8b47432bafb0)
+
 ----------------------------------------------------
 
 A cloud-masked median of Sentinel-2 imagery was composited for the duration of the vessel's grounding.
