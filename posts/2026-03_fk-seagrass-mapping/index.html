@@ -188,6 +188,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>An attempt was made to map seagrasses in the Florida Keys region.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="results-v3.png" class="img-fluid figure-img"></p>
+<figcaption>results-v3</figcaption>
+</figure>
+</div>
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
 <section id="existing-maps" class="level3">
@@ -216,6 +222,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="v2" class="level5">
 <h5 class="anchored" data-anchor-id="v2">V2</h5>
 <p>A further expanded version of seagrass ground truth data was created which add seagrass points to the northwest of the FKNMS. Although <a href="https://myfwc.com/research/habitat/seagrasses/simm/">the statewide seagrass map from the SIMM program</a> does not show seagrass in this region, satellite imagery appears to show seagrass in the region. It is possible this region is not assessed because it is outside of the FKNMS. <a href="http://serc.fiu.edu/seagrass/!CDReport/Synoptic/SynopticSumm.htm">A sampling effort of the area from the late 1990s shows seagrass in the area</a>. Based on this seagrass points were added for this region. The water in this area is shallow and often very turbid. The turbidity may cause issues for the classifier.</p>
+</section>
+<section id="v3" class="level5">
+<h5 class="anchored" data-anchor-id="v3">V3</h5>
+<p>A turbid water class was added to account for the highly turbid waters in the NorthWest area of the area of interest.</p>
+<p>Despite the turbid water the S2 median image reveals some features at the scale of 10-100 meters.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="everglades-features.png" class="img-fluid figure-img"></p>
+<figcaption>everglades-features</figcaption>
+</figure>
+</div>
+<p>These appear to be seafloor features, although some image mosaicking artifacts are also in the region. The bathymetry layer is too coarse to confirm any physical shapes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="everglades-features-bathy.png" class="img-fluid figure-img"></p>
+<figcaption>everglades-features-bathy</figcaption>
+</figure>
+</div>
+<p>A view from along the NorthWest edge of the “dense seagrass” area shows these patches as very similar to the seagrass.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="everglades-features-context.png" class="img-fluid figure-img"></p>
+<figcaption>everglades-features-context</figcaption>
+</figure>
+</div>
 </section>
 </section>
 </section>
@@ -327,15 +358,6 @@ gdal_translate -of COG -co COMPRESS=DEFLATE -co BIGTIFF=YES fl_keys_bluetopo_wgs
 </div>
 <p>Some features in the northwest from the bathymetry layer seem over-pronounced. Further refinement of the ground truth data from regional experts is needed.</p>
 </section>
-</section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
-<p>Next steps might include:</p>
-<ol type="1">
-<li>sunglint correction</li>
-<li>addition of texture ‘bands’</li>
-<li>implement bandSum-normalization</li>
-</ol>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
