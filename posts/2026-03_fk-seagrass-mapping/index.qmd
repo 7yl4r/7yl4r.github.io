@@ -6,6 +6,8 @@ date: "2026-03-09"
 
 An attempt was made to map seagrasses in the Florida Keys region.
 
+![results-v3](results-v3.png)
+
 
 ## Background
 ### Existing Maps
@@ -36,6 +38,23 @@ It is possible this region is not assessed because it is outside of the FKNMS.
 Based on this seagrass points were added for this region.
 The water in this area is shallow and often very turbid.
 The turbidity may cause issues for the classifier.
+
+
+##### V3
+A turbid water class was added to account for the highly turbid waters in the NorthWest area of the area of interest.
+
+Despite the turbid water the S2 median image reveals some features at the scale of 10-100 meters.
+
+![everglades-features](everglades-features.png)
+
+These appear to be seafloor features, although some image mosaicking artifacts are also in the region.
+The bathymetry layer is too coarse to confirm any physical shapes.
+
+![everglades-features-bathy](everglades-features-bathy.png)
+
+A view from along the NorthWest edge of the "dense seagrass" area shows these patches as very similar to the seagrass.
+
+![everglades-features-context](everglades-features-context.png)
 
 
 ### S2 Multispectral Images
@@ -176,18 +195,6 @@ With seagrass allowed in the northwest region and the hardcover class being excl
 
 Some features in the northwest from the bathymetry layer seem over-pronounced.
 Further refinement of the ground truth data from regional experts is needed.
-
-
-
-## Next Steps 
-
-Next steps might include:
-
-
-1. sunglint correction
-2. addition of texture 'bands'
-3. implement bandSum-normalization
-
 
 
 ## References
