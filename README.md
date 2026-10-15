@@ -1,14 +1,15 @@
 ### New Post
 
 ```bash
-source fn.sh
-newPost my-new-post-name
-emacs posts/YYYY-MM_$POSTNAME/index.qmd
+make post NAME=my-new-post-name TITLE="My New Post"
+emacs posts/YYYY-MM_my-new-post-name/index.qmd
 
-quarto render
+make render
 
-quarto publish  # NOTE: I tried to use gh-actions for this, but it kept breaking.
+make publish  # NOTE: I tried to use gh-actions for this, but it kept breaking.
 ```
+
+Run `make help` for the full list of targets.
 
 ------------------------------------------------
 

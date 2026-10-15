@@ -2,7 +2,7 @@ This is a cheatsheet of things I might want ot copy-paste
 
 ```bash
 # create new blog post
-source fn.sh && newPost postNameHere
+make post NAME=postNameHere TITLE="Post Name Here"
 
 # push gh-pages
 quarto publish gh-pages --no-prompt --no-browser
